@@ -1,0 +1,114 @@
+---
+import meta from '../../content/meta.json';
+---
+
+<section id="hero">
+  <div class="gradient-bg"></div>
+  <div class="hero-content">
+    <p class="intro fade-up">Hi, my name is</p>
+    <h1 class="fade-up">{meta.name}.</h1>
+    <h2 class="fade-up">I build things in the cloud.</h2>
+    <p class="bio fade-up">{meta.bio}</p>
+    <div class="cta fade-up">
+      <a href="#projects" class="btn">Check out my work</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  #hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: var(--nav-height);
+    position: relative;
+    overflow: hidden;
+    max-width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: max(50px, calc((100vw - var(--max-width)) / 2));
+    padding-right: max(50px, calc((100vw - var(--max-width)) / 2));
+  }
+
+  .gradient-bg {
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    margin-left: -75vw;
+    margin-right: -75vw;
+    width: 150vw;
+    top: -75%;
+    height: 250%;
+    background: radial-gradient(
+      circle at 20% 50%,
+      var(--color-accent) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      var(--color-accent) 0%,
+      transparent 40%
+    );
+    opacity: 0.15;
+    animation: gradient-shift 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(40px);
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    20% {
+      transform: translate(8%, -5%) rotate(72deg) scale(1.05);
+    }
+    40% {
+      transform: translate(-3%, 8%) rotate(144deg) scale(0.98);
+    }
+    60% {
+      transform: translate(-8%, -3%) rotate(216deg) scale(1.02);
+    }
+    80% {
+      transform: translate(5%, 7%) rotate(288deg) scale(0.96);
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .intro {
+    font-family: var(--font-mono);
+    font-size: clamp(14px, 3vw, 16px);
+    color: var(--color-accent);
+    margin-bottom: 20px;
+    animation-delay: 100ms;
+  }
+  h1 {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 600;
+    color: var(--color-white-pure);
+    line-height: 1.1;
+    animation-delay: 200ms;
+  }
+  h2 {
+    font-size: clamp(30px, 6vw, 70px);
+    font-weight: 600;
+    color: var(--color-slate);
+    line-height: 1.1;
+    margin-top: 10px;
+    animation-delay: 300ms;
+  }
+  .bio {
+    max-width: 540px;
+    margin-top: 20px;
+    animation-delay: 400ms;
+  }
+  .cta {
+    margin-top: 50px;
+    animation-delay: 500ms;
+  }
+</style>

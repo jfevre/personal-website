@@ -1,0 +1,151 @@
+---
+// Skills/tech to list
+const skills = [
+  'AWS (Lambda, ECS, IAM)',
+  'Terraform',
+  'Ansible',
+  'Docker',
+  'Python / Bash',
+  'GitHub Actions',
+  'Bitbucket Pipelines',
+  'Windows Server / AD',
+  'Linux',
+  'Grafana',
+];
+
+const certifications = [
+  {
+    name: 'AWS Certified Solutions Architect – Professional',
+    url: 'https://www.credly.com/badges/ecab86ff-c09e-42e0-9cd4-778461951433/public_url',
+  },
+  {
+    name: 'AWS Certified Solutions Architect – Associate',
+    url: 'https://www.credly.com/badges/8bcb5147-5971-437f-a10a-fff4e45fb81f/public_url',
+  },
+  {
+    name: 'AWS Certified DevOps Engineer – Professional',
+    url: 'https://www.credly.com/badges/381f3f2f-61e6-4d15-b288-0d461912170a/public_url',
+  },
+  {
+    name: 'HashiCorp Certified: Terraform Associate',
+    url: 'https://www.credly.com/badges/213c0647-5083-452f-b619-de66e72a31a0/public_url',
+  },
+  {
+    name: 'FinOps Certified Practitioner',
+    url: 'https://www.credly.com/badges/15e6c4d5-28f8-4e8a-9329-282e4cb759a1/public_url',
+  },
+  {
+    name: 'PRINCE2 Agile Foundation',
+    url: null,
+  },
+];
+---
+
+<section id="about">
+  <h2 class="section-heading fade-up" data-number="01.">About Me</h2>
+
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>
+        I'm a Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and DevOps.
+        I specialise in building automated, scalable cloud solutions — turning manual processes into reliable pipelines
+        and helping teams ship with confidence.
+      </p>
+      <p>
+        I've worked across government, travel, and transport sectors, delivering everything from serverless platforms
+        to large-scale Active Directory migrations. I hold SC security clearance and enjoy solving problems that
+        sit at the intersection of infrastructure, automation, and developer experience.
+      </p>
+      <p>
+        I studied Business & ICT at Sheffield Hallam University, and I'm always learning — currently deep in
+        AWS, Terraform, and modern CI/CD practices.
+      </p>
+
+      <h3 class="subsection-heading">Certifications</h3>
+      <ul class="skills-list certs">
+        {certifications.map(cert => (
+          <li>
+            {cert.url ? (
+              <a href={cert.url} target="_blank" rel="noopener noreferrer" class="cert-link">
+                {cert.name}
+              </a>
+            ) : (
+              cert.name
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <h3 class="subsection-heading">Technologies</h3>
+      <ul class="skills-list">
+        {skills.map(skill => <li>{skill}</li>)}
+      </ul>
+    </div>
+
+    <div class="about-photo">
+      <div class="photo-wrapper">
+        <img src="/headshot.png" alt="John Fevre" width="300" height="300" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 50px;
+    align-items: start;
+  }
+  .about-text p {
+    margin-bottom: 15px;
+  }
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 200px));
+    gap: 0 10px;
+    list-style: none;
+    margin-top: 20px;
+  }
+  .skills-list li {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 4px 0;
+  }
+  .skills-list li::before {
+    content: '▹ ';
+    color: var(--color-accent);
+  }
+  .skills-list.certs {
+    grid-template-columns: 1fr;
+  }
+  .cert-link {
+    color: var(--color-slate-light);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .cert-link:hover {
+    color: var(--color-accent);
+  }
+  .subsection-heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  .photo-wrapper {
+    position: relative;
+    max-width: 300px;
+    border-radius: var(--border-radius);
+  }
+  .photo-wrapper img {
+    width: 100%;
+    border-radius: var(--border-radius);
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { max-width: 250px; margin: 0 auto; }
+  }
+</style>

@@ -1,0 +1,178 @@
+---
+import projects from '../../content/projects.json';
+const featured = projects.filter(p => p.featured);
+const others = projects.filter(p => !p.featured);
+---
+
+<section id="projects">
+  <h2 class="section-heading fade-up" data-number="03.">Things I've Built</h2>
+
+  <!-- Featured projects (large cards) -->
+  <ul class="featured-list">
+    {featured.map((project, i) => (
+      <li class="featured-project fade-up">
+        <div class={`project-content ${i % 2 !== 0 ? 'right' : ''}`}>
+          <p class="project-label">Featured Project</p>
+          <h3 class="project-name">{project.name}</h3>
+          <div class="project-description">
+            <p>{project.description}</p>
+          </div>
+          <ul class="project-tech">
+            {project.tech.map(t => <li>{t}</li>)}
+          </ul>
+          <div class="project-links">
+            {project.github && (
+              <a href={project.github} aria-label="GitHub" target="_blank" rel="noreferrer">GH</a>
+            )}
+            {project.external && (
+              <a href={project.external} aria-label="External" target="_blank" rel="noreferrer">↗</a>
+            )}
+          </div>
+        </div>
+        {project.image && (
+          <div class="project-image">
+            <img src={project.image} alt={project.name} />
+          </div>
+        )}
+      </li>
+    ))}
+  </ul>
+
+  <!-- Other projects grid -->
+  {others.length > 0 && (
+    <h3 class="other-heading fade-up">Other Noteworthy Projects</h3>
+    <ul class="other-grid">
+      {others.map(project => (
+        <li class="other-project fade-up">
+          <div class="other-top">
+            <span class="folder-icon">📁</span>
+            <div class="other-links">
+              {project.github && (
+                <a href={project.github} aria-label="GitHub" target="_blank" rel="noreferrer">GH</a>
+              )}
+            </div>
+          </div>
+          <h3>{project.name}</h3>
+          <p>{project.description}</p>
+          <ul class="tech-list">
+            {project.tech.map(t => <li>{t}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  )}
+</section>
+
+<style>
+  .featured-list { list-style: none; display: flex; flex-direction: column; gap: 100px; }
+  .featured-project {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+  .project-content {
+    grid-column: 1 / 8;
+    grid-row: 1;
+    position: relative;
+    z-index: 2;
+  }
+  .project-content.right { grid-column: 6 / -1; text-align: right; }
+  .project-image {
+    grid-column: 6 / -1;
+    grid-row: 1;
+    opacity: 0.5;
+    transition: var(--transition);
+  }
+  .project-image:hover { opacity: 0.8; }
+  .project-image img { width: 100%; border-radius: var(--border-radius); }
+  .featured-project:nth-child(even) .project-image { grid-column: 1 / 8; }
+  .featured-project:nth-child(even) .project-content { grid-column: 7 / -1; }
+
+  .project-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+  }
+  .project-name {
+    font-size: clamp(22px, 4vw, 28px);
+    color: var(--color-white-pure);
+    margin-bottom: 20px;
+  }
+  .project-description {
+    background: var(--color-navy-light);
+    padding: 20px 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    margin-bottom: 20px;
+  }
+  .project-tech {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .project-content.right .project-tech { justify-content: flex-end; }
+  .project-links { display: flex; gap: 15px; }
+  .project-content.right .project-links { justify-content: flex-end; }
+  .project-links a {
+    color: var(--color-slate-light);
+    font-family: var(--font-mono);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .project-links a:hover { color: var(--color-accent); }
+
+  /* Other projects */
+  .other-heading {
+    text-align: center;
+    font-size: clamp(18px, 3vw, 22px);
+    color: var(--color-white);
+    margin: 80px 0 40px;
+  }
+  .other-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+  }
+  .other-project {
+    background: var(--color-navy-light);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: var(--transition);
+  }
+  .other-project:hover { transform: translateY(-5px); }
+  .other-top { display: flex; justify-content: space-between; align-items: center; }
+  .other-project h3 { color: var(--color-white); font-size: 18px; }
+  .tech-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .other-links a {
+    color: var(--color-slate);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    transition: var(--transition);
+  }
+  .other-links a:hover { color: var(--color-accent); }
+
+  @media (max-width: 768px) {
+    .featured-project { display: block; }
+    .project-image { display: none; }
+    .project-description { background: none; padding: 0; }
+  }
+</style>

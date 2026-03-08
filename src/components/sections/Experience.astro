@@ -1,0 +1,125 @@
+---
+import jobs from '../../content/jobs.json';
+---
+
+<section id="experience">
+  <h2 class="section-heading fade-up" data-number="02.">Where I've Worked</h2>
+
+  <div class="experience-container fade-up">
+    <!-- Tab buttons (populated by JS) -->
+    <ul class="tab-list" role="tablist">
+      {jobs.map((job, i) => (
+        <li role="presentation">
+          <button
+            role="tab"
+            class={`tab-btn ${i === 0 ? 'active' : ''}`}
+            data-tab={i}
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {job.company}
+          </button>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Tab panels -->
+    <div class="tab-panels">
+      {jobs.map((job, i) => (
+        <div role="tabpanel" class={`tab-panel ${i === 0 ? 'active' : ''}`} data-panel={i}>
+          <h3 class="job-title">
+            {job.role} <span class="at">@</span>
+            <a href={job.url} target="_blank" rel="noreferrer" class="company-link">
+              {job.company}
+            </a>
+          </h3>
+          <p class="job-range">{job.range}</p>
+          <ul class="job-bullets">
+            {job.bullets.map(bullet => <li>{bullet}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const i = tab.getAttribute('data-tab');
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      document.querySelector(`.tab-panel[data-panel="${i}"]`)?.classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  .experience-container {
+    display: flex;
+    gap: 10px;
+    max-width: 700px;
+  }
+  .tab-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+    border-left: 2px solid var(--color-slate-dark);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-slate);
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+    transition: var(--transition);
+  }
+  .tab-btn:hover, .tab-btn.active {
+    color: var(--color-accent);
+    background: var(--color-navy-light);
+    border-left-color: var(--color-accent);
+  }
+  .tab-panel { display: none; padding: 5px 30px; }
+  .tab-panel.active { display: block; }
+  .job-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-white);
+    margin-bottom: 5px;
+  }
+  .at { color: var(--color-accent); margin: 0 2px; }
+  .company-link { color: var(--color-accent); text-decoration: none; }
+  .company-link:hover { text-decoration: underline; }
+  .job-range {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .job-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .job-bullets li::before {
+    content: '▹ ';
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 600px) {
+    .experience-container { flex-direction: column; }
+    .tab-list { flex-direction: row; overflow-x: auto; border-left: none; border-bottom: 2px solid var(--color-slate-dark); }
+    .tab-btn { border-left: none; border-bottom: 2px solid transparent; margin-left: 0; margin-bottom: -2px; }
+    .tab-btn:hover, .tab-btn.active { border-left-color: transparent; border-bottom-color: var(--color-accent); }
+  }
+</style>

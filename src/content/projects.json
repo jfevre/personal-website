@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "featured": true,
+    "name": "Veeam AWS Automation Platform",
+    "description": "Automated platform using the Veeam for AWS API to deploy standardised backup appliances, providing a unified backup environment across the business.",
+    "tech": ["AWS", "Python", "Veeam", "Bitbucket Pipelines"],
+    "github": null,
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 2,
+    "featured": true,
+    "name": "1Password SCIM Bridge",
+    "description": "Designed and deployed a 1Password SCIM bridge into ECS Fargate to seamlessly manage Active Directory groups in 1Password.",
+    "tech": ["AWS", "ECS Fargate", "Docker", "Terraform"],
+    "github": null,
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 3,
+    "featured": false,
+    "name": "Government Data Centre Migration",
+    "description": "Multi-environment serverless platform using Lambda and ECS Fargate with full CI/CD pipeline, CloudWatch monitoring, and alerting.",
+    "tech": ["AWS Lambda", "ECS Fargate", "Terraform", "CloudWatch"],
+    "github": null,
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 4,
+    "featured": false,
+    "name": "AD Migration to AWS",
+    "description": "Migrated 20,000+ Active Directory users from Windows Server 2003 to a security-hardened AWS Windows Server 2016 environment.",
+    "tech": ["AWS", "Windows Server", "Active Directory", "PowerShell"],
+    "github": null,
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 5,
+    "featured": false,
+    "name": "OIDC Terraform Module",
+    "description": "Reusable Terraform module for OIDC-based access to AWS environments, improving security posture across CI/CD pipelines.",
+    "tech": ["Terraform", "AWS IAM", "OIDC", "Bitbucket"],
+    "github": null,
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 6,
+    "featured": false,
+    "name": "Linux HA Cluster Migration",
+    "description": "Redeployed internal tools from Windows Server to a Linux & SQL high-availability clustered environment.",
+    "tech": ["Linux", "MariaDB", "Ansible", "Docker"],
+    "github": null,
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 7,
+    "featured": false,
+    "name": "Home Assistant Add-on",
+    "description": "Custom Home Assistant add-on for home automation and integration.",
+    "tech": ["Home Assistant", "Docker", "Python"],
+    "github": "https://github.com/jfevre",
+    "external": null,
+    "image": null
+  },
+  {
+    "id": 8,
+    "featured": false,
+    "name": "Home Lab Infrastructure",
+    "description": "Personal home lab environment managed with Ansible for experimentation and learning.",
+    "tech": ["Ansible", "Docker", "Linux", "Proxmox"],
+    "github": null,
+    "external": null,
+    "image": null
+  }
+]

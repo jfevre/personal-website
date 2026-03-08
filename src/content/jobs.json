@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "role": "Cloud Engineer",
+    "company": "Stagecoach",
+    "url": "https://www.stagecoachgroup.com",
+    "range": "Jan 2023 – Present",
+    "bullets": [
+      "Built an automated platform with the Veeam for AWS API to standardise backup appliances across AWS environments",
+      "Introduced Bitbucket Pipelines to the DevOps team and created reusable OIDC Terraform modules for secure AWS access"
+    ]
+  },
+  {
+    "id": 2,
+    "role": "Infrastructure Engineer",
+    "company": "Awaze",
+    "url": "https://www.awaze.com",
+    "range": "Sep 2021 – Jan 2023",
+    "bullets": [
+      "Implemented Infrastructure as Code, replacing manual tasks with Terraform, Git, and GitHub Actions",
+      "Designed and deployed the 1Password SCIM bridge into ECS Fargate for seamless AD group management"
+    ]
+  },
+  {
+    "id": 3,
+    "role": "Infrastructure Consultant",
+    "company": "Informed Solutions",
+    "url": "https://www.informed.com",
+    "range": "Nov 2017 – Sep 2021",
+    "bullets": [
+      "Maintained multi-environment serverless government projects using Lambda & ECS Fargate, including CI/CD pipelines and CloudWatch monitoring",
+      "Migrated a Windows Server 2003 domain to a security-hardened AWS Windows Server 2016 environment with 20,000+ AD users",
+      "Redeployed internal tools from Windows Server to a Linux & SQL high-availability clustered environment"
+    ]
+  },
+  {
+    "id": 4,
+    "role": "Technical Support Agent",
+    "company": "One Iota",
+    "url": "https://www.oneiota.co.uk",
+    "range": "Aug 2015 – Jan 2017",
+    "bullets": [
+      "Provided 3rd line support for multiple sales channels of major global retailers",
+      "On-site installation and configuration of signage and interactive POS systems"
+    ]
+  },
+  {
+    "id": 5,
+    "role": "Technical Support & Engineer",
+    "company": "WDSI International",
+    "url": null,
+    "range": "Jul 2013 – Jul 2015",
+    "bullets": [
+      "Key part of the engineering team for a full football stadium WiFi installation",
+      "Provided critical support during worldwide sporting events"
+    ]
+  }
+]
