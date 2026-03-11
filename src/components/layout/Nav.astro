@@ -1,6 +1,6 @@
 ---
 import meta from '../../content/meta.json';
-const navLinks = ['About', 'Experience', 'Projects', 'Contact'];
+const navLinks = ['About', 'Experience', 'Projects', 'Contact', 'Visitors'];
 ---
 
 <header>
@@ -9,14 +9,51 @@ const navLinks = ['About', 'Experience', 'Projects', 'Contact'];
       <img src="/logo.png" alt="JF" width="40" height="40" class="logo-dark" />
       <img src="/lightmode.png" alt="JF" width="40" height="40" class="logo-light" />
     </a>
+    <div class="mobile-controls">
+      <button id="theme-toggle-mobile" class="theme-toggle-mobile" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10 1v2M10 17v2M18 10h-2M4 10H2M15.5 15.5l-1.5-1.5M6 6L4.5 4.5M15.5 4.5L14 6M6 14l-1.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M17 10.5c-1.1 4.4-5.7 7.2-10.1 6.1-4.4-1.1-7.2-5.7-6.1-10.1.8-3.1 3.3-5.6 6.5-6.3.7-.2 1.4.4 1.3 1.1-.1.5-.1 1-.1 1.6 0 4.4 3.6 8.1 8.1 8.1.5 0 1.1 0 1.6-.1.7-.1 1.3.6 1.1 1.3-.4 1-.8 1.9-1.3 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
     <ul class="nav-links">
       {navLinks.map((link, i) => (
         <li>
-          <a href={`#${link.toLowerCase()}`}>
+          <a href={`#${link.toLowerCase()}`} class="nav-link">
             <span class="nav-number">0{i + 1}.</span> {link}
           </a>
         </li>
       ))}
+      <li>
+        <a href={meta.resumeUrl} target="_blank" rel="noreferrer" class="btn">Resume</a>
+      </li>
+      <li class="mobile-only mobile-social-container">
+        <div class="mobile-social-icons">
+          {meta.social.github && (
+            <a href={meta.social.github} target="_blank" rel="noreferrer" class="social-icon-link">
+              <img src="/github_dark.png" alt="GitHub" width="24" height="24" class="icon-dark" />
+              <img src="/github_light.png" alt="GitHub" width="24" height="24" class="icon-light" />
+              <span class="social-text">GitHub</span>
+            </a>
+          )}
+          {meta.social.linkedin && (
+            <a href={meta.social.linkedin} target="_blank" rel="noreferrer" class="social-icon-link">
+              <img src="/linkedin_dark.png" alt="LinkedIn" width="24" height="24" class="icon-dark" />
+              <img src="/linkedin_light.png" alt="LinkedIn" width="24" height="24" class="icon-light" />
+              <span class="social-text">LinkedIn</span>
+            </a>
+          )}
+        </div>
+      </li>
       <li>
         <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
           <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -28,11 +65,7 @@ const navLinks = ['About', 'Experience', 'Projects', 'Contact'];
           </svg>
         </button>
       </li>
-      <li>
-        <a href={meta.resumeUrl} target="_blank" rel="noreferrer" class="btn">Resume</a>
-      </li>
     </ul>
-    <!-- TODO: hamburger menu for mobile -->
   </nav>
 </header>
 
@@ -123,4 +156,179 @@ const navLinks = ['About', 'Experience', 'Projects', 'Contact'];
   :global([data-theme="light"]) .sun-icon {
     display: block;
   }
+
+  .mobile-only {
+    display: none;
+  }
+
+  .mobile-controls {
+    display: none;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .theme-toggle-mobile {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 12;
+  }
+  .menu-toggle span {
+    width: 25px;
+    height: 2px;
+    background: var(--color-accent);
+    transition: var(--transition);
+  }
+  .menu-toggle.active span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 25px;
+    }
+    .logo img {
+      width: 45px;
+      height: 45px;
+    }
+    .mobile-controls {
+      display: flex;
+    }
+    .theme-toggle-mobile {
+      display: flex;
+      background: none;
+      border: none;
+      color: var(--color-slate-light);
+      cursor: pointer;
+      padding: 10px;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .theme-toggle-mobile:hover {
+      color: var(--color-accent);
+    }
+    .theme-toggle-mobile .sun-icon,
+    .theme-toggle-mobile .moon-icon {
+      display: none;
+    }
+    :global([data-theme="dark"]) .theme-toggle-mobile .moon-icon,
+    :global(:root:not([data-theme])) .theme-toggle-mobile .moon-icon {
+      display: block;
+    }
+    :global([data-theme="light"]) .theme-toggle-mobile .sun-icon {
+      display: block;
+    }
+    .menu-toggle {
+      display: flex;
+    }
+    #theme-toggle {
+      display: none;
+    }
+    .nav-links {
+      position: fixed;
+      top: var(--nav-height);
+      right: 0;
+      width: min(75vw, 400px);
+      height: calc(100vh - var(--nav-height));
+      background: var(--color-navy-light);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 50px 40px;
+      gap: 25px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+      overflow-y: auto;
+    }
+    .nav-links.active {
+      transform: translateX(0);
+    }
+    .nav-links li {
+      width: 100%;
+    }
+    .nav-links a {
+      display: block;
+      width: 100%;
+      font-size: 16px;
+    }
+    .nav-number {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .mobile-only {
+      display: block;
+    }
+    .mobile-social-container {
+      width: 100%;
+    }
+    .mobile-social-icons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .social-icon-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      transition: var(--transition);
+    }
+    .social-icon-link:hover {
+      transform: translateY(-3px);
+      opacity: 0.8;
+    }
+    .social-icon-link .icon-dark,
+    .social-icon-link .icon-light {
+      display: none;
+    }
+    :global([data-theme="dark"]) .social-icon-link .icon-dark,
+    :global(:root:not([data-theme])) .social-icon-link .icon-dark {
+      display: block;
+    }
+    :global([data-theme="light"]) .social-icon-link .icon-light {
+      display: block;
+    }
+  }
 </style>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  menuToggle?.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    navLinks?.classList.toggle('active');
+  });
+
+  // Close menu when clicking a nav link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle?.classList.remove('active');
+      navLinks?.classList.remove('active');
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navLinks?.contains(e.target as Node) && !menuToggle?.contains(e.target as Node)) {
+      menuToggle?.classList.remove('active');
+      navLinks?.classList.remove('active');
+    }
+  });
+</script>

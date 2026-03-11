@@ -22,7 +22,8 @@ Hosted on **Netlify**, deployed via GitHub Actions on push to `main`.
 | Framework      | Astro (static, `output: 'static'`)|
 | Styling        | Plain CSS with custom properties  |
 | Interactivity  | Vanilla JS (inline `<script>` tags in `.astro` files) |
-| Fonts          | Google Fonts — Inter + Fira Code  |
+| Fonts          | Google Fonts — Roboto + JetBrains Mono  |
+| Mapping        | Leaflet (for visitor map)         |
 | Deployment     | Netlify via GitHub Actions        |
 
 ---
@@ -90,6 +91,7 @@ Key tokens:
 | Experience | `sections/Experience.astro`     | `#experience` | `02.`     |
 | Projects   | `sections/Projects.astro`       | `#projects` | `03.`       |
 | Contact    | `sections/Contact.astro`        | `#contact`  | `04.`       |
+| Visitors   | `sections/Visitors.astro`       | `#visitors` | `05.`       |
 
 Nav links in `Nav.astro` are generated from a `navLinks` array — update that array if sections change.
 
@@ -161,6 +163,69 @@ Required GitHub secrets:
 - `NETLIFY_SITE_ID`
 
 Both found in your Netlify dashboard under Site Settings → Build & Deploy.
+
+---
+
+## Security Guidelines
+
+A comprehensive security audit has been completed. See **`SECURITY-AUDIT.md`** for the full report.
+
+### Critical Security Rules
+
+**ALWAYS follow these security practices when making changes:**
+
+1. **XSS Prevention:**
+   - NEVER use `innerHTML` or template literals to inject external data into DOM
+   - Use `textContent` or `document.createElement()` for dynamic content
+   - Validate and sanitize ALL external data (API responses, GeoJSON, etc.)
+
+2. **API Security:**
+   - NEVER expose API keys or secrets in client-side code
+   - Validate all API responses before rendering
+   - Implement rate limiting and caching for public APIs
+   - Use server-side proxies to hide real API endpoints
+
+3. **Input Validation:**
+   - Validate country codes: `/^[A-Z]{2}$/`
+   - Validate numbers with bounds checking
+   - Sanitize user input before use in selectors or queries
+
+4. **Security Headers (when deploying):**
+   - Add `_headers` file in `/public/` with CSP, X-Frame-Options, etc.
+   - See SECURITY-AUDIT.md for recommended header configuration
+
+5. **Dependencies:**
+   - Run `npm audit` before every deploy
+   - Keep dependencies updated monthly
+   - Review security advisories on GitHub
+
+### Known Security Issues (To Fix)
+
+See SECURITY-AUDIT.md for complete list. Priority fixes needed:
+
+1. **CRITICAL:** Leaflet popup XSS vulnerability (Visitors.astro:252-257)
+2. **HIGH:** Unconfigured visitor API endpoint exposure
+3. **MEDIUM:** Missing Content Security Policy headers
+
+### Security Checklist for New Features
+
+Before adding new features:
+
+- [ ] No hardcoded secrets or API keys
+- [ ] All external data is validated
+- [ ] No `innerHTML` or unsafe DOM manipulation
+- [ ] API endpoints use authentication if needed
+- [ ] Proper error handling (don't leak stack traces)
+- [ ] External URLs validated with regex
+- [ ] Security headers configured for new routes
+
+### Reporting Security Issues
+
+If you discover a security vulnerability:
+1. Check if it's documented in SECURITY-AUDIT.md
+2. DO NOT commit sensitive information
+3. Fix critical issues immediately
+4. Update SECURITY-AUDIT.md with remediation status
 
 ---
 

@@ -47,12 +47,16 @@ import jobs from '../../content/jobs.json';
   const panels = document.querySelectorAll('.tab-panel');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const i = tab.getAttribute('data-tab');
+      const rawIndex = tab.getAttribute('data-tab');
+      // Validate as integer to prevent selector injection
+      const panelIndex = parseInt(rawIndex || '', 10);
+      if (isNaN(panelIndex) || panelIndex < 0 || panelIndex > 100) return;
+
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
       panels.forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
-      document.querySelector(`.tab-panel[data-panel="${i}"]`)?.classList.add('active');
+      document.querySelector(`[data-panel="${panelIndex}"]`)?.classList.add('active');
     });
   });
 </script>
@@ -61,14 +65,15 @@ import jobs from '../../content/jobs.json';
   .experience-container {
     display: flex;
     gap: 10px;
-    max-width: 700px;
+    max-width: 800px;
   }
   .tab-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    min-width: 140px;
+    min-width: 100px;
     border-left: 2px solid var(--color-slate-dark);
+    flex-shrink: 0;
   }
   .tab-btn {
     background: none;
@@ -112,7 +117,7 @@ import jobs from '../../content/jobs.json';
     gap: 10px;
   }
   .job-bullets li::before {
-    content: '▹ ';
+    content: '● ';
     color: var(--color-accent);
   }
 

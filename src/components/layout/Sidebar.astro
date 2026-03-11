@@ -8,15 +8,16 @@ import meta from '../../content/meta.json';
     {meta.social.github && (
       <li>
         <a href={meta.social.github} aria-label="GitHub" target="_blank" rel="noreferrer">
-          <!-- Replace text with SVG icon -->
-          GH
+          <img src="/github_dark.png" alt="GitHub" width="50" height="50" class="icon-dark" />
+          <img src="/github_light.png" alt="GitHub" width="50" height="50" class="icon-light" />
         </a>
       </li>
     )}
     {meta.social.linkedin && (
       <li>
         <a href={meta.social.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer">
-          LI
+          <img src="/linkedin_dark.png" alt="LinkedIn" width="50" height="50" class="icon-dark" />
+          <img src="/linkedin_light.png" alt="LinkedIn" width="50" height="50" class="icon-light" />
         </a>
       </li>
     )}
@@ -74,6 +75,17 @@ import meta from '../../content/meta.json';
   .sidebar--left a:hover {
     color: var(--color-accent);
     transform: translateY(-3px);
+  }
+  .icon-dark,
+  .icon-light {
+    display: none;
+  }
+  :global([data-theme="dark"]) .icon-dark,
+  :global(:root:not([data-theme])) .icon-dark {
+    display: block;
+  }
+  :global([data-theme="light"]) .icon-light {
+    display: block;
   }
   .email-link {
     font-family: var(--font-mono);

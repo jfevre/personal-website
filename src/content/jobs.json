@@ -1,17 +1,28 @@
 [
   {
     "id": 1,
+    "role": "DevOps Engineer",
+    "company": "Awaze",
+    "url": "https://www.awaze.com",
+    "range": "Oct 2023 – Present",
+    "bullets": [
+      "Leading DevOps initiatives and cloud infrastructure automation",
+      "Implementing modern CI/CD pipelines and Infrastructure as Code practices"
+    ]
+  },
+  {
+    "id": 2,
     "role": "Cloud Engineer",
     "company": "Stagecoach",
     "url": "https://www.stagecoachgroup.com",
-    "range": "Jan 2023 – Present",
+    "range": "Jan 2023 – Oct 2023",
     "bullets": [
       "Built an automated platform with the Veeam for AWS API to standardise backup appliances across AWS environments",
       "Introduced Bitbucket Pipelines to the DevOps team and created reusable OIDC Terraform modules for secure AWS access"
     ]
   },
   {
-    "id": 2,
+    "id": 3,
     "role": "Infrastructure Engineer",
     "company": "Awaze",
     "url": "https://www.awaze.com",
@@ -22,7 +33,7 @@
     ]
   },
   {
-    "id": 3,
+    "id": 4,
     "role": "Infrastructure Consultant",
     "company": "Informed Solutions",
     "url": "https://www.informed.com",
@@ -34,7 +45,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": 5,
     "role": "Technical Support Agent",
     "company": "One Iota",
     "url": "https://www.oneiota.co.uk",
@@ -45,7 +56,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": 6,
     "role": "Technical Support & Engineer",
     "company": "WDSI International",
     "url": null,

@@ -40,26 +40,28 @@ const others = projects.filter(p => !p.featured);
 
   <!-- Other projects grid -->
   {others.length > 0 && (
-    <h3 class="other-heading fade-up">Other Noteworthy Projects</h3>
-    <ul class="other-grid">
-      {others.map(project => (
-        <li class="other-project fade-up">
-          <div class="other-top">
-            <span class="folder-icon">📁</span>
-            <div class="other-links">
-              {project.github && (
-                <a href={project.github} aria-label="GitHub" target="_blank" rel="noreferrer">GH</a>
-              )}
+    <>
+      <h3 class="other-heading fade-up">Other Noteworthy Projects</h3>
+      <ul class="other-grid">
+        {others.map(project => (
+          <li class="other-project fade-up">
+            <div class="other-top">
+              <span class="folder-icon">📁</span>
+              <div class="other-links">
+                {project.github && (
+                  <a href={project.github} aria-label="GitHub" target="_blank" rel="noreferrer">GH</a>
+                )}
+              </div>
             </div>
-          </div>
-          <h3>{project.name}</h3>
-          <p>{project.description}</p>
-          <ul class="tech-list">
-            {project.tech.map(t => <li>{t}</li>)}
-          </ul>
-        </li>
-      ))}
-    </ul>
+            <h3>{project.name}</h3>
+            <p>{project.description}</p>
+            <ul class="tech-list">
+              {project.tech.map(t => <li>{t}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </>
   )}
 </section>
 
@@ -130,15 +132,16 @@ const others = projects.filter(p => !p.featured);
   /* Other projects */
   .other-heading {
     text-align: center;
-    font-size: clamp(18px, 3vw, 22px);
+    font-size: clamp(20px, 3vw, 24px);
     color: var(--color-white);
-    margin: 80px 0 40px;
+    margin: 100px 0 50px;
   }
   .other-grid {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 15px;
+    margin-bottom: 50px;
   }
   .other-project {
     background: var(--color-navy-light);
@@ -174,5 +177,6 @@ const others = projects.filter(p => !p.featured);
     .featured-project { display: block; }
     .project-image { display: none; }
     .project-description { background: none; padding: 0; }
+    .other-heading { margin: 60px 0 30px; }
   }
 </style>

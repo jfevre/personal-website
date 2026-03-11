@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
   /* Typography */
   --font-sans: 'Roboto', sans-serif;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
 
   /* Layout */
   --nav-height:    70px;
