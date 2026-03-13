@@ -299,7 +299,7 @@
       // Fetch visitor data and GeoJSON in parallel
       const [data, geoJsonResponse] = await Promise.all([
         fetchVisitorData(),
-        fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+        fetch('/countries.geojson')
       ]);
 
       visitorData = data.visitors || [];
