@@ -315,7 +315,7 @@
         geoJsonLayer = L.geoJSON(geoJson, {
           style: (feature) => getCountryStyle(feature),
           onEachFeature: (feature, layer) => {
-            const countryCode = feature?.properties?.ISO_A2;
+            const countryCode = feature?.properties?.['ISO3166-1-Alpha-2'];
 
             // Validate country code format (ISO-2)
             if (!isValidCountryCode(countryCode)) return;
@@ -324,7 +324,7 @@
 
             if (visitorCount > 0) {
               // Use safe DOM methods to prevent XSS
-              const countryName = String(feature.properties.ADMIN || 'Unknown');
+              const countryName = String(feature.properties.name || 'Unknown');
               layer.bindPopup(createPopupContent(countryName, visitorCount));
             }
           }
@@ -364,7 +364,7 @@
 
   // Get style for country feature
   function getCountryStyle(feature: any): L.PathOptions {
-    const countryCode = feature?.properties?.ISO_A2;
+    const countryCode = feature?.properties?.['ISO3166-1-Alpha-2'];
 
     // Validate country code before using
     if (!isValidCountryCode(countryCode)) {

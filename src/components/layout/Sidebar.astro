@@ -31,10 +31,6 @@ import meta from '../../content/meta.json';
   </ul>
 </div>
 
-<!-- Fixed right: email vertical -->
-<div class="sidebar sidebar--right">
-  <a href={`mailto:${meta.email}`} class="email-link">{meta.email}</a>
-</div>
 
 <style>
   .sidebar {
@@ -54,7 +50,6 @@ import meta from '../../content/meta.json';
     background: var(--color-slate);
   }
   .sidebar--left  { left: 40px; }
-  .sidebar--right { right: 40px; }
 
   .sidebar--left ul {
     list-style: none;
@@ -86,19 +81,6 @@ import meta from '../../content/meta.json';
   }
   :global([data-theme="light"]) .icon-light {
     display: block;
-  }
-  .email-link {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-slate);
-    letter-spacing: 0.1em;
-    writing-mode: vertical-rl;
-    text-decoration: none;
-    transition: var(--transition);
-  }
-  .email-link:hover {
-    color: var(--color-accent);
-    transform: translateY(-3px);
   }
 
   @media (max-width: 1080px) { .sidebar { display: none; } }
