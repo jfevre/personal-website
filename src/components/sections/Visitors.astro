@@ -1,6 +1,7 @@
 ---
-// API endpoint via CloudFront proxy (secured with X-Origin-Verify header)
-const API_ENDPOINT = '/api/visitors';
+// API endpoint via CloudFront proxy
+// POST records visit + returns counts (CloudFront-Viewer-Country header added server-side)
+// GET returns counts without recording
 ---
 
 <section id="visitors">
@@ -149,8 +150,9 @@ const API_ENDPOINT = '/api/visitors';
   let visitorData: { country: string; count: number }[] = [];
   let maxCount = 0;
 
-  // API endpoint via CloudFront proxy
-  const API_ENDPOINT = '/api/visitors';
+  // API endpoint - use full URL for local dev, relative path for production
+  const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_ENDPOINT = isLocalDev ? 'https://john.fevre.uk/api/visitors' : '/api/visitors';
 
   // Validate ISO-2 country code format
   function isValidCountryCode(code: unknown): code is string {
@@ -264,12 +266,17 @@ const API_ENDPOINT = '/api/visitors';
   }
 
   // Fetch visitor data from API with timeout
+  // POST records the visit (CloudFront adds country header server-side)
+  // GET would fetch counts without recording
   async function fetchVisitorData() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     try {
-      const response = await fetch(API_ENDPOINT, { signal: controller.signal });
+      const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        signal: controller.signal
+      });
       clearTimeout(timeoutId);
 
       if (!response.ok) throw new Error('API request failed');

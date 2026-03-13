@@ -1,0 +1,51 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::251200161642:role/github
+          aws-region: eu-west-2
+
+      - name: Get deployment config from SSM
+        id: ssm
+        run: |
+          echo "s3_bucket=$(aws ssm get-parameter --name /portfolio-site/s3-bucket-name --query 'Parameter.Value' --output text)" >> $GITHUB_OUTPUT
+          echo "distribution_id=$(aws ssm get-parameter --name /portfolio-site/cloudfront-distribution-id --query 'Parameter.Value' --output text)" >> $GITHUB_OUTPUT
+
+      - name: Sync to S3
+        run: aws s3 sync dist/ s3://${{ steps.ssm.outputs.s3_bucket }} --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.ssm.outputs.distribution_id }} \
+            --paths "/*"
