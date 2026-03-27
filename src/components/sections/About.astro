@@ -82,7 +82,7 @@ const certifications = [
 
     <div class="about-photo">
       <div class="photo-wrapper">
-        <img src="/headshot.png" alt="John Fevre" width="300" height="300" />
+        <img src="/headshot.png" alt="John Fevre" />
       </div>
     </div>
   </div>
@@ -136,30 +136,14 @@ const certifications = [
     position: relative;
     max-width: 300px;
     border-radius: var(--border-radius);
-    animation: pulse-glow 3s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25);
+  }
+  :global([data-theme="light"]) .photo-wrapper {
+    box-shadow: 0 0 20px rgba(31, 95, 31, 0.3);
   }
   .photo-wrapper img {
     width: 100%;
     border-radius: var(--border-radius);
-    animation: fade-pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(100, 255, 218, 0.15);
-    }
-    50% {
-      box-shadow: 0 0 40px rgba(100, 255, 218, 0.35);
-    }
-  }
-
-  @keyframes fade-pulse {
-    0%, 100% {
-      opacity: 0.85;
-    }
-    50% {
-      opacity: 1;
-    }
   }
 
   @media (max-width: 768px) {
