@@ -1,9 +1,9 @@
 {
   "name": "John Fevre",
-  "role": "DevOps Engineer",
+  "role": "DevOps/Cloud Engineer",
   "email": "fevs11@gmail.com",
   "location": "Manchester, UK",
-  "bio": "Cloud Engineer with 10+ years in infrastructure and DevOps. I specialise in AWS, Terraform, and CI/CD — automating everything from serverless platforms to enterprise migrations. SC cleared.",
+  "bio": "DevOps/Cloud Engineer with 10+ years in infrastructure and automation. I specialise in AWS, Terraform, and CI/CD — from serverless AI pipelines to enterprise migrations. Previously SC cleared.",
   "social": {
     "github": "https://github.com/jfevre",
     "linkedin": "https://www.linkedin.com/in/john-fevre-6b1713100/",

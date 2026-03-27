@@ -11,7 +11,7 @@ A personal CV/portfolio website inspired by brittanychiang.com (v4).
 Built with **Astro** (static output), plain CSS custom properties, and vanilla JS.
 No framework UI libraries. No CSS-in-JS. No Tailwind (unless you add it).
 
-Hosted on **Netlify**, deployed via GitHub Actions on push to `main`.
+Hosted on **S3 & Cloudfront**, deployed via GitHub Actions on push to `main`.
 
 ---
 
@@ -24,7 +24,7 @@ Hosted on **Netlify**, deployed via GitHub Actions on push to `main`.
 | Interactivity  | Vanilla JS (inline `<script>` tags in `.astro` files) |
 | Fonts          | Google Fonts — Roboto + JetBrains Mono  |
 | Mapping        | Leaflet (for visitor map)         |
-| Deployment     | Netlify via GitHub Actions        |
+| Deployment     | AWS s3 via GitHub Actions        |
 
 ---
 
@@ -191,8 +191,6 @@ A comprehensive security audit has been completed. See **`SECURITY-AUDIT.md`** f
    - Sanitize user input before use in selectors or queries
 
 4. **Security Headers (when deploying):**
-   - Add `_headers` file in `/public/` with CSP, X-Frame-Options, etc.
-   - See SECURITY-AUDIT.md for recommended header configuration
 
 5. **Dependencies:**
    - Run `npm audit` before every deploy

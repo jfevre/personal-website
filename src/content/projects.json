@@ -2,9 +2,9 @@
   {
     "id": 1,
     "featured": true,
-    "name": "Veeam AWS Automation Platform",
-    "description": "Automated platform using the Veeam for AWS API to deploy standardised backup appliances, providing a unified backup environment across the business.",
-    "tech": ["AWS", "Python", "Veeam", "Bitbucket Pipelines"],
+    "name": "AI Image Analysis Pipeline",
+    "description": "Built a serverless AI pipeline using Lambda, Bedrock, SQS, and Step Functions to extract structured metadata from millions of property listing images that previously had none.",
+    "tech": ["AWS Bedrock", "Lambda", "Step Functions", "SQS"],
     "github": null,
     "external": null,
     "image": null
@@ -12,29 +12,19 @@
   {
     "id": 2,
     "featured": true,
-    "name": "1Password SCIM Bridge",
-    "description": "Designed and deployed a 1Password SCIM bridge into ECS Fargate to seamlessly manage Active Directory groups in 1Password.",
-    "tech": ["AWS", "ECS Fargate", "Docker", "Terraform"],
+    "name": "Akamai to CloudFront Migration",
+    "description": "Delivered a major CDN migration, translating complex multi-environment Akamai configurations into reusable Terraform modules, enabling teams to self-manage their own CDN for the first time.",
+    "tech": ["CloudFront", "Terraform", "AWS", "CI/CD"],
     "github": null,
     "external": null,
     "image": null
   },
   {
     "id": 3,
-    "featured": false,
-    "name": "Government Data Centre Migration",
-    "description": "Multi-environment serverless platform using Lambda and ECS Fargate with full CI/CD pipeline, CloudWatch monitoring, and alerting.",
-    "tech": ["AWS Lambda", "ECS Fargate", "Terraform", "CloudWatch"],
-    "github": null,
-    "external": null,
-    "image": null
-  },
-  {
-    "id": 4,
-    "featured": false,
-    "name": "AD Migration to AWS",
-    "description": "Migrated 20,000+ Active Directory users from Windows Server 2003 to a security-hardened AWS Windows Server 2016 environment.",
-    "tech": ["AWS", "Windows Server", "Active Directory", "PowerShell"],
+    "featured": true,
+    "name": "IAM Identity Centre Migration",
+    "description": "Migrated IAM users to AWS IAM Identity Centre, centralising SSO and permission sets across multiple accounts, eliminating static access keys, and implementing TEAM for time-limited privilege escalation.",
+    "tech": ["AWS IAM", "Identity Centre", "SSO", "Terraform"],
     "github": null,
     "external": null,
     "image": null
@@ -42,9 +32,9 @@
   {
     "id": 5,
     "featured": false,
-    "name": "OIDC Terraform Module",
-    "description": "Reusable Terraform module for OIDC-based access to AWS environments, improving security posture across CI/CD pipelines.",
-    "tech": ["Terraform", "AWS IAM", "OIDC", "Bitbucket"],
+    "name": "Veeam AWS Automation",
+    "description": "Built an automated Veeam for AWS platform to standardise backup appliances across AWS environments, with reusable OIDC Terraform modules for secure access.",
+    "tech": ["AWS", "Veeam", "Terraform", "OIDC"],
     "github": null,
     "external": null,
     "image": null
@@ -52,9 +42,9 @@
   {
     "id": 6,
     "featured": false,
-    "name": "Linux HA Cluster Migration",
-    "description": "Redeployed internal tools from Windows Server to a Linux & SQL high-availability clustered environment.",
-    "tech": ["Linux", "MariaDB", "Ansible", "Docker"],
+    "name": "1Password SCIM Bridge",
+    "description": "Designed and deployed a 1Password SCIM bridge on ECS Fargate to automate group provisioning from Active Directory.",
+    "tech": ["ECS Fargate", "Docker", "Terraform", "AD"],
     "github": null,
     "external": null,
     "image": null
@@ -65,7 +55,7 @@
     "name": "Home Assistant Add-on",
     "description": "Custom Home Assistant add-on for home automation and integration.",
     "tech": ["Home Assistant", "Docker", "Python"],
-    "github": "https://github.com/jfevre",
+    "github": "https://github.com/jfevre/tfgm-tram-analyzer-ha-add-on",
     "external": null,
     "image": null
   },
@@ -74,7 +64,7 @@
     "featured": false,
     "name": "Home Lab Infrastructure",
     "description": "Personal home lab environment managed with Ansible for experimentation and learning.",
-    "tech": ["Ansible", "Docker", "Linux", "Proxmox"],
+    "tech": ["Ansible", "Docker", "Linux", "VirtIO"],
     "github": null,
     "external": null,
     "image": null

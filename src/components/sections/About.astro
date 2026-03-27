@@ -1,42 +1,40 @@
 ---
 // Skills/tech to list
 const skills = [
-  'AWS (Lambda, ECS, IAM)',
-  'Terraform',
+  'AWS (Lambda, ECS, CloudFront)',
+  'Terraform / CDK',
   'Ansible',
   'Docker',
   'Python / Bash',
   'GitHub Actions',
   'Bitbucket Pipelines',
   'Windows Server / AD',
-  'Linux',
+  'Linux (Ubuntu / Amazon)',
   'Grafana',
+  'Step Functions / SQS',
+  'Bedrock / AI Pipelines',
 ];
 
 const certifications = [
   {
-    name: 'AWS Certified Solutions Architect – Professional',
+    name: 'AWS Certified Solutions Architect – Professional (2025)',
     url: 'https://www.credly.com/badges/ecab86ff-c09e-42e0-9cd4-778461951433/public_url',
   },
   {
-    name: 'AWS Certified Solutions Architect – Associate',
-    url: 'https://www.credly.com/badges/8bcb5147-5971-437f-a10a-fff4e45fb81f/public_url',
-  },
-  {
-    name: 'AWS Certified DevOps Engineer – Professional',
+    name: 'AWS Certified DevOps Engineer – Professional (2024)',
     url: 'https://www.credly.com/badges/381f3f2f-61e6-4d15-b288-0d461912170a/public_url',
   },
   {
-    name: 'HashiCorp Certified: Terraform Associate',
+    name: 'AWS Certified Solutions Architect – Associate (2022)',
+    url: 'https://www.credly.com/badges/8bcb5147-5971-437f-a10a-fff4e45fb81f/public_url',
+  },
+  {
+    name: 'HashiCorp Certified: Terraform Associate (2022)',
     url: 'https://www.credly.com/badges/213c0647-5083-452f-b619-de66e72a31a0/public_url',
   },
   {
-    name: 'FinOps Certified Practitioner',
+    name: 'FinOps Certified Practitioner (2024)',
     url: 'https://www.credly.com/badges/15e6c4d5-28f8-4e8a-9329-282e4cb759a1/public_url',
-  },
-  {
-    name: 'PRINCE2 Agile Foundation',
-    url: null,
   },
 ];
 ---
@@ -47,18 +45,18 @@ const certifications = [
   <div class="about-grid fade-up">
     <div class="about-text">
       <p>
-        I'm a Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and DevOps.
+        I'm a DevOps/Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and automation.
         I specialise in building automated, scalable cloud solutions — turning manual processes into reliable pipelines
         and helping teams ship with confidence.
       </p>
       <p>
-        I've worked across government, travel, and transport sectors, delivering everything from serverless platforms
-        to large-scale Active Directory migrations. I hold SC security clearance and enjoy solving problems that
+        I've worked across government, travel, and transport sectors, delivering everything from serverless AI pipelines
+        to large-scale Active Directory migrations. I previously held SC security clearance and enjoy solving problems that
         sit at the intersection of infrastructure, automation, and developer experience.
       </p>
       <p>
-        I studied Business & ICT at Sheffield Hallam University, and I'm always learning — currently deep in
-        AWS, Terraform, and modern CI/CD practices.
+        I studied Business & ICT at Sheffield Hallam University (2:1), and I'm always learning — currently building
+        with AWS Bedrock, Step Functions, and modern IaC practices.
       </p>
 
       <h3 class="subsection-heading">Certifications</h3>
@@ -138,10 +136,30 @@ const certifications = [
     position: relative;
     max-width: 300px;
     border-radius: var(--border-radius);
+    animation: pulse-glow 3s ease-in-out infinite;
   }
   .photo-wrapper img {
     width: 100%;
     border-radius: var(--border-radius);
+    animation: fade-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(100, 255, 218, 0.15);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(100, 255, 218, 0.35);
+    }
+  }
+
+  @keyframes fade-pulse {
+    0%, 100% {
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
   @media (max-width: 768px) {

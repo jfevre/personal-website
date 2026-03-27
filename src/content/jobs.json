@@ -4,10 +4,12 @@
     "role": "DevOps Engineer",
     "company": "Awaze",
     "url": "https://www.awaze.com",
-    "range": "Oct 2023 – Present",
+    "range": "Sep 2023 – Present",
     "bullets": [
-      "Leading DevOps initiatives and cloud infrastructure automation",
-      "Implementing modern CI/CD pipelines and Infrastructure as Code practices"
+      "Migrated IAM users to AWS IAM Identity Centre, centralising SSO and permission sets across multiple accounts, eliminating static access keys, and implementing TEAM for time-limited production privilege escalation.",
+      "Played a pivotal role in delivering the Akamai to CloudFront migration, translating complex multi-environment configurations into reusable Terraform modules.",
+      "Built a serverless AI image analysis pipeline (Lambda, Bedrock, SQS, Step Functions) extracting structured metadata from millions of property listing images.",
+      "Migrated a full engineering team into a dedicated AWS account — RDS Aurora, ECS frontend, private API Gateways — handing over a fully self-sufficient platform."
     ]
   },
   {
@@ -15,10 +17,10 @@
     "role": "Cloud Engineer",
     "company": "Stagecoach",
     "url": "https://www.stagecoachgroup.com",
-    "range": "Jan 2023 – Oct 2023",
+    "range": "Jan 2023 – Sep 2023",
     "bullets": [
-      "Built an automated platform with the Veeam for AWS API to standardise backup appliances across AWS environments",
-      "Introduced Bitbucket Pipelines to the DevOps team and created reusable OIDC Terraform modules for secure AWS access"
+      "Built an automated Veeam for AWS platform to standardise backup appliances across AWS environments.",
+      "Introduced Bitbucket Pipelines and a reusable OIDC Terraform module for AWS environment access, improving the team's security footprint."
     ]
   },
   {
@@ -28,8 +30,8 @@
     "url": "https://www.awaze.com",
     "range": "Sep 2021 – Jan 2023",
     "bullets": [
-      "Implemented Infrastructure as Code, replacing manual tasks with Terraform, Git, and GitHub Actions",
-      "Designed and deployed the 1Password SCIM bridge into ECS Fargate for seamless AD group management"
+      "Led IaC adoption within an operations team using Terraform, Git, and GitHub Actions, replacing manual infrastructure deployments.",
+      "Designed and deployed a 1Password SCIM bridge on ECS Fargate to automate group provisioning from Active Directory."
     ]
   },
   {
@@ -39,9 +41,8 @@
     "url": "https://www.informed.com",
     "range": "Nov 2017 – Sep 2021",
     "bullets": [
-      "Maintained multi-environment serverless government projects using Lambda & ECS Fargate, including CI/CD pipelines and CloudWatch monitoring",
-      "Migrated a Windows Server 2003 domain to a security-hardened AWS Windows Server 2016 environment with 20,000+ AD users",
-      "Redeployed internal tools from Windows Server to a Linux & SQL high-availability clustered environment"
+      "Maintained and enhanced a multi-environment serverless government platform (Lambda, ECS Fargate), covering CI/CD, CloudWatch monitoring, and cross-team support.",
+      "Migrated a Windows Server 2003 data centre to a hardened AWS/Windows Server 2016 environment, covering 20,000+ AD users, objects, and group policies."
     ]
   },
   {
@@ -51,8 +52,8 @@
     "url": "https://www.oneiota.co.uk",
     "range": "Aug 2015 – Jan 2017",
     "bullets": [
-      "Provided 3rd line support for multiple sales channels of major global retailers",
-      "On-site installation and configuration of signage and interactive POS systems"
+      "3rd line support for major global retailers; on-site installation of signage and interactive POS systems.",
+      "QA across web, mobile, and interactive platforms."
     ]
   },
   {
@@ -62,8 +63,8 @@
     "url": null,
     "range": "Jul 2013 – Jul 2015",
     "bullets": [
-      "Key part of the engineering team for a full football stadium WiFi installation",
-      "Provided critical support during worldwide sporting events"
+      "Part of the engineering team for a full stadium WiFi deployment.",
+      "Provided critical support during a major international sporting event."
     ]
   }
 ]
