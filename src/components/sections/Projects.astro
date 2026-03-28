@@ -20,14 +20,19 @@ const others = projects.filter(p => !p.featured);
           <ul class="project-tech">
             {project.tech.map(t => <li>{t}</li>)}
           </ul>
-          <div class="project-links">
-            {project.github && (
-              <a href={project.github} aria-label="GitHub" target="_blank" rel="noreferrer">GH</a>
-            )}
-            {project.external && (
-              <a href={project.external} aria-label="External" target="_blank" rel="noreferrer">↗</a>
-            )}
-          </div>
+          {(project.github || project.external) && (
+            <div class="project-links-wrapper">
+              <button class="links-toggle" aria-expanded="false">View Links</button>
+              <div class="project-links hidden">
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
+                )}
+                {project.external && (
+                  <a href={project.external} target="_blank" rel="noreferrer">Live Site</a>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         {project.image && (
           <div class="project-image">
@@ -47,17 +52,20 @@ const others = projects.filter(p => !p.featured);
           <li class="other-project fade-up">
             <div class="other-top">
               <span class="folder-icon">📁</span>
-              <div class="other-links">
-                {project.github && (
-                  <a href={project.github} aria-label="GitHub" target="_blank" rel="noreferrer">GH</a>
-                )}
-              </div>
             </div>
             <h3>{project.name}</h3>
             <p>{project.description}</p>
             <ul class="tech-list">
               {project.tech.map(t => <li>{t}</li>)}
             </ul>
+            {project.github && (
+              <div class="project-links-wrapper">
+                <button class="links-toggle" aria-expanded="false">View Links</button>
+                <div class="project-links hidden">
+                  <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
+                </div>
+              </div>
+            )}
           </li>
         ))}
       </ul>
@@ -119,11 +127,43 @@ const others = projects.filter(p => !p.featured);
     margin-bottom: 10px;
   }
   .project-content.right .project-tech { justify-content: flex-end; }
-  .project-links { display: flex; gap: 15px; }
+  .project-links-wrapper { position: relative; margin-top: 10px; }
+  .links-toggle {
+    background: none;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .links-toggle:hover {
+    background: rgba(255, 107, 53, 0.1);
+  }
+  [data-theme="light"] .links-toggle:hover {
+    background: rgba(31, 95, 31, 0.1);
+  }
+  .project-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    overflow: hidden;
+    max-height: 50px;
+    opacity: 1;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+  }
+  .project-links.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+  }
   .project-content.right .project-links { justify-content: flex-end; }
   .project-links a {
     color: var(--color-slate-light);
     font-family: var(--font-mono);
+    font-size: 13px;
     text-decoration: none;
     transition: var(--transition);
   }
@@ -164,15 +204,6 @@ const others = projects.filter(p => !p.featured);
     font-family: var(--font-mono);
     font-size: 12px;
   }
-  .other-links a {
-    color: var(--color-slate);
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    transition: var(--transition);
-  }
-  .other-links a:hover { color: var(--color-accent); }
-
   @media (max-width: 768px) {
     .featured-project { display: block; }
     .project-image { display: none; }
@@ -180,3 +211,16 @@ const others = projects.filter(p => !p.featured);
     .other-heading { margin: 60px 0 30px; }
   }
 </style>
+
+<script>
+  document.querySelectorAll('.links-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const links = button.nextElementSibling;
+      const isHidden = links?.classList.contains('hidden');
+
+      links?.classList.toggle('hidden');
+      button.setAttribute('aria-expanded', String(isHidden));
+      button.textContent = isHidden ? 'Hide Links' : 'View Links';
+    });
+  });
+</script>

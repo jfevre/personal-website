@@ -62,9 +62,9 @@
   {
     "id": 7,
     "featured": false,
-    "name": "Home Assistant Add-on",
-    "description": "Custom Home Assistant add-on for home automation and integration.",
-    "tech": ["Home Assistant", "Docker", "Python"],
+    "name": "TFGM Tram Analyzer",
+    "description": "Home Assistant add-on that tracks Manchester Metrolink trams in real-time, providing arrival predictions.",
+    "tech": ["Home Assistant", "Docker", "Python", "Web Scraping"],
     "github": "https://github.com/jfevre/tfgm-tram-analyzer-ha-add-on",
     "external": null,
     "image": null
