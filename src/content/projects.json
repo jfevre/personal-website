@@ -1,5 +1,15 @@
 [
   {
+    "id": 0,
+    "featured": true,
+    "name": "Portfolio Site",
+    "description": "This website! A static Astro site with visitor tracking via API Gateway, Lambda authorizer for origin verification, and automatic secret rotation. Infrastructure managed with Terragrunt/OpenTofu.",
+    "tech": ["Astro", "CloudFront", "API Gateway", "Lambda", "Terragrunt"],
+    "github": "https://github.com/jfevre/personal-website",
+    "external": "https://john.fevre.uk",
+    "image": null
+  },
+  {
     "id": 1,
     "featured": true,
     "name": "AI Image Analysis Pipeline",
@@ -24,7 +34,7 @@
     "featured": true,
     "name": "IAM Identity Centre Migration",
     "description": "Migrated IAM users to AWS IAM Identity Centre, centralising SSO and permission sets across multiple accounts, eliminating static access keys, and implementing TEAM for time-limited privilege escalation.",
-    "tech": ["AWS IAM", "Identity Centre", "SSO", "Terraform"],
+    "tech": ["AWS IAM", "Identity Centre", "SSO", "Terraform", "TEAM"],
     "github": null,
     "external": null,
     "image": null
