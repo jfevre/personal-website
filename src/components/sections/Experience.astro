@@ -98,6 +98,10 @@ import jobs from '../../content/jobs.json';
 </script>
 
 <style>
+  #experience {
+    justify-content: flex-start;
+    padding-top: calc(var(--nav-height) + 80px);
+  }
   .experience-container {
     display: flex;
     gap: 10px;
@@ -130,6 +134,10 @@ import jobs from '../../content/jobs.json';
     color: var(--color-accent);
     background: var(--color-navy-light);
     border-left-color: var(--color-accent);
+  }
+  .tab-panels {
+    flex: 1;
+    min-height: 350px;
   }
   .tab-panel {
     display: none;
