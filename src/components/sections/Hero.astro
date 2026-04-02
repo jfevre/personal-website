@@ -7,7 +7,7 @@ import meta from '../../content/meta.json';
   <div class="hero-content">
     <p class="intro fade-up">Hi, my name is</p>
     <h1 class="fade-up">{meta.name}.</h1>
-    <h2 class="fade-up">I build things in the cloud.</h2>
+    <h2 class="fade-up" id="hero-tagline" aria-label="I build things in the cloud."></h2>
     <p class="bio fade-up">{meta.bio}</p>
     <div class="cta fade-up">
       <a href="#projects" class="btn">Check out my work</a>
@@ -102,6 +102,19 @@ import meta from '../../content/meta.json';
     margin-top: 10px;
     animation-delay: 300ms;
   }
+  h2::after {
+    content: '|';
+    color: var(--color-accent);
+    animation: blink 0.7s step-end infinite;
+    margin-left: 2px;
+  }
+  h2.typing-done::after {
+    display: none;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
   .bio {
     max-width: 540px;
     margin-top: 20px;
@@ -112,3 +125,28 @@ import meta from '../../content/meta.json';
     animation-delay: 500ms;
   }
 </style>
+
+<script>
+  const tagline = document.getElementById('hero-tagline');
+  const text = 'I build things in the cloud.';
+  const delay = 600; // wait for fade-up to start
+  const speed = 50;  // ms per character
+
+  if (tagline && !sessionStorage.getItem('hero-typed')) {
+    let i = 0;
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        tagline.textContent = text.slice(0, ++i);
+        if (i === text.length) {
+          clearInterval(interval);
+          tagline.classList.add('typing-done');
+          sessionStorage.setItem('hero-typed', '1');
+        }
+      }, speed);
+    }, delay);
+  } else if (tagline) {
+    // Already typed this session — just show the text instantly
+    tagline.textContent = text;
+    tagline.classList.add('typing-done');
+  }
+</script>

@@ -45,18 +45,41 @@ import jobs from '../../content/jobs.json';
 <script>
   const tabs = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.tab-panel');
+
+  // Show initial panel without animation
+  const firstPanel = document.querySelector('.tab-panel.active');
+  if (firstPanel) firstPanel.classList.add('visible');
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const rawIndex = tab.getAttribute('data-tab');
-      // Validate as integer to prevent selector injection
       const panelIndex = parseInt(rawIndex || '', 10);
       if (isNaN(panelIndex) || panelIndex < 0 || panelIndex > 100) return;
 
+      const current = document.querySelector('.tab-panel.active');
+      const next = document.querySelector(`[data-panel="${panelIndex}"]`);
+      if (!next || next === current) return;
+
+      // Update tabs
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      panels.forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
-      document.querySelector(`[data-panel="${panelIndex}"]`)?.classList.add('active');
+
+      // Fade out current, then swap and fade in next
+      if (current) {
+        current.classList.remove('visible');
+        setTimeout(() => {
+          current.classList.remove('active');
+          next.classList.add('active');
+          // Trigger reflow so transition fires
+          void (next as HTMLElement).offsetHeight;
+          next.classList.add('visible');
+        }, 200);
+      } else {
+        next.classList.add('active');
+        void (next as HTMLElement).offsetHeight;
+        next.classList.add('visible');
+      }
     });
   });
 </script>
@@ -66,6 +89,7 @@ import jobs from '../../content/jobs.json';
     display: flex;
     gap: 10px;
     max-width: 800px;
+    align-items: flex-start;
   }
   .tab-list {
     list-style: none;
@@ -94,8 +118,20 @@ import jobs from '../../content/jobs.json';
     background: var(--color-navy-light);
     border-left-color: var(--color-accent);
   }
-  .tab-panel { display: none; padding: 5px 30px; }
-  .tab-panel.active { display: block; }
+  .tab-panel {
+    display: none;
+    padding: 5px 30px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .tab-panel.active {
+    display: block;
+  }
+  .tab-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .job-title {
     font-size: 20px;
     font-weight: 500;

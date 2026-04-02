@@ -1,0 +1,38 @@
+{
+  "skills": [
+    "AWS (Lambda, ECS, CloudFront, etc)",
+    "Terraform / CDK",
+    "Ansible",
+    "Docker",
+    "Python / Bash",
+    "GitHub Actions",
+    "Bitbucket Pipelines",
+    "Windows Server / AD",
+    "Linux (Ubuntu / Amazon)",
+    "Grafana",
+    "Step Functions / SQS",
+    "Bedrock / AI Pipelines"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect – Professional (2025)",
+      "url": "https://www.credly.com/badges/ecab86ff-c09e-42e0-9cd4-778461951433/public_url"
+    },
+    {
+      "name": "AWS Certified DevOps Engineer – Professional (2024)",
+      "url": "https://www.credly.com/badges/381f3f2f-61e6-4d15-b288-0d461912170a/public_url"
+    },
+    {
+      "name": "AWS Certified Solutions Architect – Associate (2022)",
+      "url": "https://www.credly.com/badges/8bcb5147-5971-437f-a10a-fff4e45fb81f/public_url"
+    },
+    {
+      "name": "HashiCorp Certified: Terraform Associate (2022)",
+      "url": "https://www.credly.com/badges/213c0647-5083-452f-b619-de66e72a31a0/public_url"
+    },
+    {
+      "name": "FinOps Certified Practitioner (2024)",
+      "url": "https://www.credly.com/badges/15e6c4d5-28f8-4e8a-9329-282e4cb759a1/public_url"
+    }
+  ]
+}

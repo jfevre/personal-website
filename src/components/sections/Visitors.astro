@@ -149,6 +149,13 @@
   let geoJsonLayer: L.GeoJSON | null = null;
   let visitorData: { country: string; count: number }[] = [];
   let maxCount = 0;
+  // Populated from GeoJSON — maps ISO-2 code to full country name
+  const countryNames: Record<string, string> = {};
+
+  // Use Intl.DisplayNames for short localised country names where available
+  const displayNames = typeof Intl !== 'undefined' && Intl.DisplayNames
+    ? new Intl.DisplayNames(['en'], { type: 'region' })
+    : null;
 
   // API endpoint - use full URL for local dev, relative path for production
   const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -305,11 +312,20 @@
       visitorData = data.visitors || [];
       maxCount = Math.max(...visitorData.map(v => v.count), 1);
 
-      // Update stats
-      updateStats(data);
-
       // Load and style GeoJSON
       const geoJson = await geoJsonResponse.json();
+
+      // Build ISO-2 → country name lookup from GeoJSON before updating stats
+      for (const feature of geoJson.features ?? []) {
+        const code = feature?.properties?.['ISO3166-1-Alpha-2'];
+        const name = feature?.properties?.name;
+        if (isValidCountryCode(code) && typeof name === 'string') {
+          countryNames[code] = name;
+        }
+      }
+
+      // Update stats after countryNames is populated
+      updateStats(data);
 
       if (map) {
         geoJsonLayer = L.geoJSON(geoJson, {
@@ -389,8 +405,10 @@
 
     if (data.visitors && data.visitors.length > 0) {
       const topCountry = data.visitors[0];
-      // Try to get country name from code (simplified - could use a lookup table)
-      document.getElementById('top-country')!.textContent = topCountry.country || '-';
+      const name = displayNames?.of(topCountry.country)
+        ?? countryNames[topCountry.country]
+        ?? topCountry.country;
+      document.getElementById('top-country')!.textContent = name;
     }
   }
 
