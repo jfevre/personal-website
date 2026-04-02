@@ -97,7 +97,7 @@ import meta from '../../content/meta.json';
   h2 {
     font-size: clamp(30px, 6vw, 70px);
     font-weight: 600;
-    color: var(--color-slate);
+    color: var(--color-accent);
     line-height: 1.1;
     margin-top: 10px;
     animation-delay: 300ms;
@@ -132,7 +132,7 @@ import meta from '../../content/meta.json';
   const delay = 600; // wait for fade-up to start
   const speed = 50;  // ms per character
 
-  if (tagline && !sessionStorage.getItem('hero-typed')) {
+  if (tagline) {
     let i = 0;
     setTimeout(() => {
       const interval = setInterval(() => {
@@ -140,13 +140,8 @@ import meta from '../../content/meta.json';
         if (i === text.length) {
           clearInterval(interval);
           tagline.classList.add('typing-done');
-          sessionStorage.setItem('hero-typed', '1');
         }
       }, speed);
     }, delay);
-  } else if (tagline) {
-    // Already typed this session — just show the text instantly
-    tagline.textContent = text;
-    tagline.classList.add('typing-done');
   }
 </script>
