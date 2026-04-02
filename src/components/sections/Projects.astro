@@ -47,8 +47,8 @@ const others = projects.filter(p => !p.featured);
     <>
       <h3 class="other-heading fade-up">Other Noteworthy Projects</h3>
       <ul class="other-grid">
-        {others.map(project => (
-          <li class="other-project fade-up">
+        {others.map((project, i) => (
+          <li class={`other-project slide-in ${i % 2 === 0 ? 'from-left' : 'from-right'}`}>
             <div class="other-top">
               <span class="folder-icon">📁</span>
             </div>
@@ -82,9 +82,9 @@ const others = projects.filter(p => !p.featured);
     opacity: 0;
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .featured-project.from-left  { transform: translateX(-60px); }
-  .featured-project.from-right { transform: translateX(60px); }
-  .featured-project.visible {
+  .featured-project.from-left, .slide-in.from-left  { transform: translateX(-60px); }
+  .featured-project.from-right, .slide-in.from-right { transform: translateX(60px); }
+  .featured-project.visible, .slide-in.visible {
     opacity: 1;
     transform: translateX(0);
   }
@@ -191,9 +191,10 @@ const others = projects.filter(p => !p.featured);
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: var(--transition);
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.25s ease;
   }
-  .other-project:hover { transform: translateY(-5px); }
+  .other-project:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
   .other-top { display: flex; justify-content: space-between; align-items: center; }
   .other-project h3 { color: var(--color-white); font-size: 18px; }
   .tech-list {
@@ -214,7 +215,7 @@ const others = projects.filter(p => !p.featured);
 </style>
 
 <script>
-  // Slide-in observer for featured projects
+  // Slide-in observer for featured projects and other project cards
   const slideObserver = new IntersectionObserver(
     (entries) => entries.forEach(e => {
       if (e.isIntersecting) {
@@ -222,7 +223,7 @@ const others = projects.filter(p => !p.featured);
         slideObserver.unobserve(e.target);
       }
     }),
-    { threshold: 0.2, rootMargin: '0px 0px -80px 0px' }
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
   document.querySelectorAll('.slide-in').forEach(el => slideObserver.observe(el));
 

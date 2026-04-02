@@ -65,7 +65,16 @@ The number and decorative line are rendered via CSS `::before` / `::after` — d
 
 ## Scroll Animations
 
-Add `class="fade-up"` to any element that should animate in on scroll. The IntersectionObserver in `index.astro` handles the rest by toggling the `.visible` class.
+Two animation classes are available for scroll-triggered entrance effects. The IntersectionObserver in `index.astro` handles both by toggling the `.visible` class.
+
+- `fade-up` — element fades in and rises from below. Use for most elements.
+- `slide-in from-left` / `slide-in from-right` — element slides in horizontally. Used on alternating grid items (e.g. other projects cards) where even-indexed items come from the left and odd-indexed from the right:
+
+```astro
+{items.map((item, i) => (
+  <li class={`slide-in ${i % 2 === 0 ? 'from-left' : 'from-right'}`}>
+))}
+```
 
 ## Design Tokens
 
