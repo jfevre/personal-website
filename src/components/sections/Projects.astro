@@ -10,9 +10,8 @@ const others = projects.filter(p => !p.featured);
   <!-- Featured projects (large cards) -->
   <ul class="featured-list">
     {featured.map((project, i) => (
-      <li class="featured-project fade-up">
+      <li class={`featured-project slide-in ${i % 2 !== 0 ? 'from-right' : 'from-left'}`}>
         <div class={`project-content ${i % 2 !== 0 ? 'right' : ''}`}>
-          <p class="project-label">Featured Project</p>
           <h3 class="project-name">{project.name}</h3>
           <div class="project-description">
             <p>{project.description}</p>
@@ -74,12 +73,20 @@ const others = projects.filter(p => !p.featured);
 </section>
 
 <style>
-  .featured-list { list-style: none; display: flex; flex-direction: column; gap: 100px; }
+  .featured-list { list-style: none; display: flex; flex-direction: column; gap: 100px; overflow: hidden; }
   .featured-project {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     align-items: center;
     gap: 10px;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .featured-project.from-left  { transform: translateX(-60px); }
+  .featured-project.from-right { transform: translateX(60px); }
+  .featured-project.visible {
+    opacity: 1;
+    transform: translateX(0);
   }
   .project-content {
     grid-column: 1 / 8;
@@ -99,12 +106,6 @@ const others = projects.filter(p => !p.featured);
   .featured-project:nth-child(even) .project-image { grid-column: 1 / 8; }
   .featured-project:nth-child(even) .project-content { grid-column: 7 / -1; }
 
-  .project-label {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--color-accent);
-    margin-bottom: 10px;
-  }
   .project-name {
     font-size: clamp(22px, 4vw, 28px);
     color: var(--color-white-pure);
@@ -213,6 +214,18 @@ const others = projects.filter(p => !p.featured);
 </style>
 
 <script>
+  // Slide-in observer for featured projects
+  const slideObserver = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        slideObserver.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.2, rootMargin: '0px 0px -80px 0px' }
+  );
+  document.querySelectorAll('.slide-in').forEach(el => slideObserver.observe(el));
+
   document.querySelectorAll('.links-toggle').forEach(button => {
     button.addEventListener('click', () => {
       const links = button.nextElementSibling;

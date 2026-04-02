@@ -6,47 +6,49 @@ const { skills, certifications } = about;
 <section id="about">
   <h2 class="section-heading fade-up" data-number="01.">About Me</h2>
 
-  <div class="about-grid fade-up">
+  <div class="about-grid">
     <div class="about-text">
-      <p>
+      <p class="fade-up">
         I'm a DevOps/Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and automation.
         I specialise in building automated, scalable cloud solutions — turning manual processes into reliable pipelines
         and helping teams ship with confidence.
       </p>
-      <p>
+      <p class="fade-up">
         I've worked across government, travel, and transport sectors, delivering everything from serverless AI pipelines
         to large-scale Active Directory migrations. I previously held SC security clearance and enjoy solving problems that
         sit at the intersection of infrastructure, automation, and developer experience.
       </p>
-      <p>
+      <p class="fade-up">
         I studied Business & ICT at Sheffield Hallam University (2:1), and I'm always learning — currently building
         with AWS Bedrock, Step Functions, and modern IaC practices.
       </p>
 
-      <h3 class="subsection-heading">Certifications</h3>
-      <ul class="skills-list certs">
+      <h3 class="subsection-heading fade-up">Certifications</h3>
+      <ul class="cert-list fade-up">
         {certifications.map(cert => (
-          <li>
+          <li class="cert-item">
             {cert.url ? (
               <a href={cert.url} target="_blank" rel="noopener noreferrer" class="cert-link">
+                <span class="cert-icon">▹</span>
                 {cert.name}
               </a>
             ) : (
-              cert.name
+              <span><span class="cert-icon">▹</span>{cert.name}</span>
             )}
           </li>
         ))}
       </ul>
 
-      <h3 class="subsection-heading">Technologies</h3>
-      <ul class="skills-list">
+      <h3 class="subsection-heading fade-up">Technologies</h3>
+      <ul class="skills-list fade-up">
         {skills.map(skill => <li>{skill}</li>)}
       </ul>
     </div>
 
-    <div class="about-photo">
+    <div class="about-photo fade-up">
       <div class="photo-wrapper">
         <img src="/headshot.png" alt="John Fevre" />
+        <div class="photo-border"></div>
       </div>
     </div>
   </div>
@@ -56,62 +58,121 @@ const { skills, certifications } = about;
   .about-grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
-    gap: 50px;
+    gap: 60px;
     align-items: start;
   }
   .about-text p {
     margin-bottom: 15px;
+    line-height: 1.7;
   }
-  .skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    gap: 0 10px;
+
+  /* Certifications */
+  .cert-list {
     list-style: none;
-    margin-top: 20px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
-  .skills-list li {
+  .cert-item {
     font-family: var(--font-mono);
     font-size: 13px;
-    padding: 4px 0;
-  }
-  .skills-list li::before {
-    content: '▹ ';
-    color: var(--color-accent);
-  }
-  .skills-list.certs {
-    grid-template-columns: 1fr;
   }
   .cert-link {
     color: var(--color-slate-light);
     text-decoration: none;
     transition: var(--transition);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
   }
   .cert-link:hover {
     color: var(--color-accent);
+    border-color: var(--color-slate-dark);
+    background: var(--color-navy-light);
   }
+  .cert-icon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  /* Skills */
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 200px));
+    gap: 4px 10px;
+    list-style: none;
+    margin-top: 15px;
+  }
+  .skills-list li {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 4px 0;
+    color: var(--color-slate-light);
+  }
+  .skills-list li::before {
+    content: '▹ ';
+    color: var(--color-accent);
+  }
+
   .subsection-heading {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--color-white);
-    margin-top: 25px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+  }
+
+  /* Photo */
+  .about-photo {
+    position: sticky;
+    top: calc(var(--nav-height) + 40px);
   }
   .photo-wrapper {
     position: relative;
     max-width: 300px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25);
-  }
-  :global([data-theme="light"]) .photo-wrapper {
-    box-shadow: 0 0 20px rgba(31, 95, 31, 0.3);
   }
   .photo-wrapper img {
     width: 100%;
     border-radius: var(--border-radius);
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: grayscale(20%);
+    transition: var(--transition);
+  }
+  .photo-wrapper:hover img {
+    filter: grayscale(0%);
+    transform: translate(-4px, -4px);
+  }
+  .photo-border {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--color-accent);
+    border-radius: var(--border-radius);
+    z-index: 0;
+    transition: var(--transition);
+  }
+  .photo-wrapper:hover .photo-border {
+    top: 8px;
+    left: 8px;
   }
 
   @media (max-width: 768px) {
     .about-grid { grid-template-columns: 1fr; }
-    .about-photo { max-width: 250px; margin: 0 auto; }
+    .about-photo {
+      max-width: 220px;
+      margin: 0 auto;
+      position: static;
+    }
   }
 </style>

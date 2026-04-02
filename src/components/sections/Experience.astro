@@ -46,9 +46,19 @@ import jobs from '../../content/jobs.json';
   const tabs = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.tab-panel');
 
+  function animateBullets(panel: Element) {
+    const bullets = panel.querySelectorAll('.job-bullets li');
+    bullets.forEach((li, i) => {
+      setTimeout(() => li.classList.add('bullet-visible'), i * 60);
+    });
+  }
+
   // Show initial panel without animation
   const firstPanel = document.querySelector('.tab-panel.active');
-  if (firstPanel) firstPanel.classList.add('visible');
+  if (firstPanel) {
+    firstPanel.classList.add('visible');
+    animateBullets(firstPanel);
+  }
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -65,20 +75,23 @@ import jobs from '../../content/jobs.json';
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
 
-      // Fade out current, then swap and fade in next
+      // Fade out current, then swap and fade in next with bullet animation
       if (current) {
         current.classList.remove('visible');
+        // Reset bullets on the outgoing panel immediately
+        current.querySelectorAll('.job-bullets li').forEach(li => li.classList.remove('bullet-visible'));
         setTimeout(() => {
           current.classList.remove('active');
           next.classList.add('active');
-          // Trigger reflow so transition fires
           void (next as HTMLElement).offsetHeight;
           next.classList.add('visible');
+          animateBullets(next);
         }, 200);
       } else {
         next.classList.add('active');
         void (next as HTMLElement).offsetHeight;
         next.classList.add('visible');
+        animateBullets(next);
       }
     });
   });
@@ -151,6 +164,15 @@ import jobs from '../../content/jobs.json';
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .job-bullets li {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .job-bullets li.bullet-visible {
+    opacity: 1;
+    transform: translateX(0);
   }
   .job-bullets li::before {
     content: '● ';
