@@ -19,8 +19,9 @@
     "url": "https://www.stagecoachgroup.com",
     "range": "Jan 2023 – Sep 2023",
     "bullets": [
-      "Built an automated Veeam for AWS platform to standardise backup appliances across AWS environments.",
-      "Introduced Bitbucket Pipelines and a reusable OIDC Terraform module for AWS environment access, improving the team's security footprint."
+      "Built an automated backup platform using the Veeam for AWS API, standardising backup appliances across AWS environments to give the business a unified, consistent backup strategy.",
+      "Introduced Bitbucket Pipelines to the DevOps team, to reduce costs of running jenkins boxes bringing as the minutes for the bitbucket pipelines were being paid for but not used.",
+      "Authored a reusable OIDC Terraform module for AWS environment access, removing the need for long-lived IAM credentials and improving the team's overall security posture."
     ]
   },
   {
@@ -30,8 +31,9 @@
     "url": "https://www.awaze.com",
     "range": "Sep 2021 – Jan 2023",
     "bullets": [
-      "Led IaC adoption within an operations team using Terraform, Git, and GitHub Actions, replacing manual infrastructure deployments.",
-      "Designed and deployed a 1Password SCIM bridge on ECS Fargate to automate group provisioning from Active Directory."
+      "Introduced IaC into an operations team where all tasks had previously been performed manually — replacing ad-hoc changes with Terraform for deployments, Git for source control, and GitHub Actions for pipeline-driven promotion through environments.",
+      "Reduced change window durations significantly by scripting out common infrastructure changes in Terraform, cutting risk and toil for the on-call team.",
+      "Designed and deployed a 1Password SCIM bridge on ECS Fargate, automating group provisioning from Active Directory into 1Password and eliminating manual account management overhead."
     ]
   },
   {
@@ -41,8 +43,12 @@
     "url": "https://www.informed.com",
     "range": "Nov 2017 – Sep 2021",
     "bullets": [
-      "Maintained and enhanced a multi-environment serverless government platform (Lambda, ECS Fargate), covering CI/CD, CloudWatch monitoring, and cross-team support.",
-      "Migrated a Windows Server 2003 data centre to a hardened AWS/Windows Server 2016 environment, covering 20,000+ AD users, objects, and group policies."
+      "Maintained and developed the Terraform repository underpinning a multi-environment serverless government platform (Lambda, ECS Fargate), including production code reviews, CloudWatch monitoring and alerting, and cross-team technical support.",
+      "Managed and enhanced the Drone.io CI/CD pipeline for the government platform, ensuring reliable promotion of changes across development, staging, and production environments.",
+      "Led the migration of a Windows Server 2003 data centre domain to a security-hardened AWS environment running Windows Server 2016, including over 20,000 Active Directory users, objects, and group policies.",
+      "Redeployed internal company tooling from a legacy Windows Server environment to a Linux-based, high-availability cluster backed by MariaDB/PostgreSQL, improving resilience and reducing licensing costs.",
+      "Managed user account lifecycle to ISO 27001 standards across on-premises Active Directory and Office 365, maintaining audit-ready access controls for both internal staff and client environments.",
+      "Provided 1st, 2nd, and 3rd line support across internal and client infrastructure, acting as an escalation point and working directly with development teams on all elements of the service."
     ]
   },
   {
@@ -52,8 +58,9 @@
     "url": "https://www.oneiota.co.uk",
     "range": "Aug 2015 – Jan 2017",
     "bullets": [
-      "3rd line support for major global retailers; on-site installation of signage and interactive POS systems.",
-      "QA across web, mobile, and interactive platforms."
+      "Provided 3rd line support for multiple sales channels of some of the largest global retailers, acting as the escalation point for complex technical issues across web, mobile, and in-store platforms.",
+      "Carried out on-site installation and configuration of digital signage and interactive point-of-sale systems across retail environments.",
+      "Performed QA across web applications, mobile apps, interactive signage, and POS systems, ensuring releases met functional and UX standards before going live."
     ]
   },
   {
@@ -63,8 +70,9 @@
     "url": null,
     "range": "Jul 2013 – Jul 2015",
     "bullets": [
-      "Part of the engineering team for a full stadium WiFi deployment.",
-      "Provided critical support during a major international sporting event."
+      "Part of the engineering team responsible for a full stadium WiFi deployment, covering fan connectivity as well as internal systems including POS, ticketing, and digital signage.",
+      "Provided critical on-site support for the installation during a major international sporting event, ensuring network stability under high-traffic conditions.",
+      "Delivered 2nd and 3rd line support to WiFi hotspot networks operated by the UK's largest mobile provider, supporting high-availability consumer-facing infrastructure."
     ]
   }
 ]
