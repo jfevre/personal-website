@@ -5,8 +5,8 @@ import jobs from '../../content/jobs.json';
 <section id="experience">
   <h2 class="section-heading fade-up" data-number="02.">Where I've Worked</h2>
 
+  <!-- Desktop: tab UI -->
   <div class="experience-container fade-up">
-    <!-- Tab buttons (populated by JS) -->
     <ul class="tab-list" role="tablist">
       {jobs.map((job, i) => (
         <li role="presentation">
@@ -21,16 +21,15 @@ import jobs from '../../content/jobs.json';
         </li>
       ))}
     </ul>
-
-    <!-- Tab panels -->
     <div class="tab-panels">
       {jobs.map((job, i) => (
         <div role="tabpanel" class={`tab-panel ${i === 0 ? 'active' : ''}`} data-panel={i}>
           <h3 class="job-title">
             {job.role} <span class="at">@</span>
-            <a href={job.url} target="_blank" rel="noreferrer" class="company-link">
-              {job.company}
-            </a>
+            {job.url
+              ? <a href={job.url} target="_blank" rel="noreferrer" class="company-link">{job.company}</a>
+              : <span class="company-link">{job.company}</span>
+            }
           </h3>
           <p class="job-range">{job.range}</p>
           <ul class="job-bullets">
@@ -40,11 +39,30 @@ import jobs from '../../content/jobs.json';
       ))}
     </div>
   </div>
+
+  <!-- Mobile: vertical card list -->
+  <ul class="mobile-list">
+    {jobs.map((job, i) => (
+      <li class={`mobile-card slide-in ${i % 2 === 0 ? 'from-left' : 'from-right'}`}>
+        <p class="job-range">{job.range}</p>
+        <h3 class="job-title">
+          {job.role} <span class="at">@</span>
+          {job.url
+            ? <a href={job.url} target="_blank" rel="noreferrer" class="company-link">{job.company}</a>
+            : <span class="company-link">{job.company}</span>
+          }
+        </h3>
+        <ul class="job-bullets">
+          {job.bullets.map(bullet => <li>{bullet}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ul>
 </section>
 
 <script>
+  // Desktop tab switching
   const tabs = document.querySelectorAll('.tab-btn');
-  const panels = document.querySelectorAll('.tab-panel');
 
   function animateBullets(panel: Element) {
     const bullets = panel.querySelectorAll('.job-bullets li');
@@ -53,7 +71,6 @@ import jobs from '../../content/jobs.json';
     });
   }
 
-  // Show initial panel without animation
   const firstPanel = document.querySelector('.tab-panel.active');
   if (firstPanel) {
     firstPanel.classList.add('visible');
@@ -70,15 +87,12 @@ import jobs from '../../content/jobs.json';
       const next = document.querySelector(`[data-panel="${panelIndex}"]`);
       if (!next || next === current) return;
 
-      // Update tabs
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
 
-      // Fade out current, then swap and fade in next with bullet animation
       if (current) {
         current.classList.remove('visible');
-        // Reset bullets on the outgoing panel immediately
         current.querySelectorAll('.job-bullets li').forEach(li => li.classList.remove('bullet-visible'));
         setTimeout(() => {
           current.classList.remove('active');
@@ -95,6 +109,18 @@ import jobs from '../../content/jobs.json';
       }
     });
   });
+
+  // Mobile slide-in observer
+  const slideObserver = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        slideObserver.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.mobile-card').forEach(el => slideObserver.observe(el));
 </script>
 
 <style>
@@ -102,6 +128,8 @@ import jobs from '../../content/jobs.json';
     justify-content: flex-start;
     padding-top: calc(var(--nav-height) + 80px);
   }
+
+  /* Desktop tab layout */
   .experience-container {
     display: flex;
     gap: 10px;
@@ -135,10 +163,7 @@ import jobs from '../../content/jobs.json';
     background: var(--color-navy-light);
     border-left-color: var(--color-accent);
   }
-  .tab-panels {
-    flex: 1;
-    min-height: 350px;
-  }
+  .tab-panels { flex: 1; min-height: 350px; }
   .tab-panel {
     display: none;
     padding: 5px 30px;
@@ -146,13 +171,10 @@ import jobs from '../../content/jobs.json';
     transform: translateY(8px);
     transition: opacity 0.2s ease, transform 0.2s ease;
   }
-  .tab-panel.active {
-    display: block;
-  }
-  .tab-panel.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .tab-panel.active { display: block; }
+  .tab-panel.visible { opacity: 1; transform: translateY(0); }
+
+  /* Shared job content styles */
   .job-title {
     font-size: 20px;
     font-weight: 500;
@@ -165,7 +187,8 @@ import jobs from '../../content/jobs.json';
   .job-range {
     font-family: var(--font-mono);
     font-size: 13px;
-    margin-bottom: 20px;
+    color: var(--color-slate);
+    margin-bottom: 12px;
   }
   .job-bullets {
     list-style: none;
@@ -178,19 +201,39 @@ import jobs from '../../content/jobs.json';
     transform: translateX(-20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
-  .job-bullets li.bullet-visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .job-bullets li::before {
-    content: '● ';
-    color: var(--color-accent);
-  }
+  .job-bullets li.bullet-visible { opacity: 1; transform: translateX(0); }
+  .job-bullets li::before { content: '● '; color: var(--color-accent); }
+
+  /* Mobile card list — hidden on desktop */
+  .mobile-list { display: none; }
 
   @media (max-width: 600px) {
-    .experience-container { flex-direction: column; }
-    .tab-list { flex-direction: row; overflow-x: auto; border-left: none; border-bottom: 2px solid var(--color-slate-dark); }
-    .tab-btn { border-left: none; border-bottom: 2px solid transparent; margin-left: 0; margin-bottom: -2px; }
-    .tab-btn:hover, .tab-btn.active { border-left-color: transparent; border-bottom-color: var(--color-accent); }
+    #experience {
+      padding-top: calc(var(--nav-height) + 40px);
+      padding-bottom: 60px;
+    }
+    .experience-container { display: none; }
+    .mobile-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      list-style: none;
+      overflow: hidden;
+    }
+    .mobile-card {
+      background: var(--color-navy-light);
+      border-radius: var(--border-radius);
+      padding: 24px;
+      border-left: 2px solid var(--color-accent);
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .mobile-card.from-left  { transform: translateX(-40px); }
+    .mobile-card.from-right { transform: translateX(40px); }
+    .mobile-card.visible    { opacity: 1; transform: translateX(0); }
+    .mobile-card .job-bullets li {
+      opacity: 1;
+      transform: none;
+    }
   }
 </style>
