@@ -1,0 +1,296 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- AWS Cloud Boundary                                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <mxCell id="aws-cloud" value="AWS (eu-west-2)"
+      style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;grStroke=0;verticalLabelPosition=top;verticalAlign=bottom;align=center;html=1;fillColor=#F8F8F8;strokeColor=#232F3E;fontStyle=1;fontSize=14;"
+      vertex="1" parent="1">
+      <mxGeometry x="200" y="50" width="880" height="900" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Section Backgrounds                                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- CI/CD -->
+    <mxCell id="cicd-bg" value=""
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=25;pointerEvents=0;"
+      vertex="1" parent="1">
+      <mxGeometry x="220" y="80" width="300" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="cicd-label" value="CI/CD"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#6c8ebf;"
+      vertex="1" parent="1">
+      <mxGeometry x="226" y="84" width="60" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Visitor API -->
+    <mxCell id="api-bg" value=""
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;opacity=25;pointerEvents=0;"
+      vertex="1" parent="1">
+      <mxGeometry x="640" y="380" width="420" height="460" as="geometry" />
+    </mxCell>
+    <mxCell id="api-label" value="Visitor API"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#d6b656;"
+      vertex="1" parent="1">
+      <mxGeometry x="646" y="384" width="90" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Secret Rotation -->
+    <mxCell id="rotate-bg" value=""
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;opacity=25;pointerEvents=0;"
+      vertex="1" parent="1">
+      <mxGeometry x="220" y="760" width="510" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="rotate-label" value="Secret Rotation"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#82b366;"
+      vertex="1" parent="1">
+      <mxGeometry x="226" y="764" width="220" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- NODES — External (outside AWS)                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- GitHub Actions -->
+    <mxCell id="github" value="GitHub Actions&#xa;(personal-website)"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#24292e;fontColor=#ffffff;strokeColor=none;fontSize=11;arcSize=20;"
+      vertex="1" parent="1">
+      <mxGeometry x="20" y="105" width="140" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- User Browser -->
+    <mxCell id="user" value="User"
+      style="shape=mxgraph.cisco.computers_and_peripherals.pc;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalLabelPosition=bottom;verticalAlign=top;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="40" y="370" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- NODES — AWS Services                                        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- IAM Role (OIDC) -->
+    <mxCell id="iam" value="IAM Role&#xa;(OIDC / github)"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#DD344C;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.role;"
+      vertex="1" parent="1">
+      <mxGeometry x="380" y="110" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Route 53 -->
+    <mxCell id="r53" value="Route 53&#xa;john.fevre.uk&#xa;www.john.fevre.uk"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#8C4FFF;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.route_53;"
+      vertex="1" parent="1">
+      <mxGeometry x="270" y="370" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- CloudFront -->
+    <mxCell id="cf" value="CloudFront"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#8C4FFF;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;"
+      vertex="1" parent="1">
+      <mxGeometry x="460" y="370" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- CloudFront Function (security headers) -->
+    <mxCell id="cf-fn" value="CloudFront Function&#xa;(security headers)"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#8C4FFF;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront_functions;"
+      vertex="1" parent="1">
+      <mxGeometry x="460" y="230" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- S3 Bucket -->
+    <mxCell id="s3" value="S3 Bucket"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#7AA116;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;"
+      vertex="1" parent="1">
+      <mxGeometry x="660" y="230" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- API Gateway -->
+    <mxCell id="apigw" value="API Gateway"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;"
+      vertex="1" parent="1">
+      <mxGeometry x="660" y="420" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Authorizer -->
+    <mxCell id="lambda-auth" value="Lambda Authorizer"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;"
+      vertex="1" parent="1">
+      <mxGeometry x="870" y="420" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Visitor Handler -->
+    <mxCell id="lambda-visitor" value="Lambda Handler"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;"
+      vertex="1" parent="1">
+      <mxGeometry x="870" y="580" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- DynamoDB -->
+    <mxCell id="dynamo" value="DynamoDB"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#C7131F;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.dynamodb;"
+      vertex="1" parent="1">
+      <mxGeometry x="870" y="730" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- SSM Parameter Store -->
+    <mxCell id="ssm" value="SSM Parameter Store"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.systems_manager;"
+      vertex="1" parent="1">
+      <mxGeometry x="660" y="580" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Rotator -->
+    <mxCell id="lambda-rotate" value="Lambda Rotator"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;"
+      vertex="1" parent="1">
+      <mxGeometry x="490" y="800" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- EventBridge Scheduler -->
+    <mxCell id="eventbridge" value="EventBridge Scheduler"
+      style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;labelPosition=center;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;"
+      vertex="1" parent="1">
+      <mxGeometry x="300" y="800" width="60" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- EDGES — CI/CD                                               -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- GitHub Actions → IAM Role -->
+    <mxCell id="e-gh-iam" value="OIDC"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#6c8ebf;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="github" target="iam" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- IAM Role → S3 (s3 sync) -->
+    <mxCell id="e-iam-s3" value="s3 sync /dist"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#6c8ebf;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;"
+      edge="1" source="iam" target="s3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- IAM Role → CloudFront (invalidate /*) -->
+    <mxCell id="e-iam-cf" value="invalidate /*"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#6c8ebf;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+      edge="1" source="iam" target="cf" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- EDGES — DNS + Static Serving                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- User → Route 53 (DNS) -->
+    <mxCell id="e-user-r53" value="DNS lookup"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#8C4FFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="user" target="r53" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Route 53 → CloudFront (CNAME → HTTPS) -->
+    <mxCell id="e-r53-cf" value="HTTPS"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#8C4FFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="r53" target="cf" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- CloudFront ↔ CloudFront Function (viewer response) -->
+    <mxCell id="e-cf-fn" value="viewer response&#xa;(inject headers)"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#8C4FFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+      edge="1" source="cf" target="cf-fn" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- CloudFront → S3 (static) -->
+    <mxCell id="e-cf-s3" value="static content"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#7AA116;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="cf" target="s3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- EDGES — Visitor API                                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- CloudFront → API Gateway (/api/* + X-Origin-Verify header) -->
+    <mxCell id="e-cf-apigw" value="/api/* + X-Origin-Verify header"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#E7157B;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="cf" target="apigw" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="600" y="430" />
+          <mxPoint x="600" y="450" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- API Gateway → Lambda Auth -->
+    <mxCell id="e-apigw-auth" value=""
+      style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E7157B;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="apigw" target="lambda-auth" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Auth → Lambda Visitor -->
+    <mxCell id="e-auth-visitor" value="authorized"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#ED7100;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+      edge="1" source="lambda-auth" target="lambda-visitor" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- SSM → Lambda Auth (read secret) -->
+    <mxCell id="e-ssm-auth" value="read secret"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#E7157B;dashed=1;endArrow=open;endFill=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;"
+      edge="1" source="ssm" target="lambda-auth" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Visitor → DynamoDB (GET: Scan / POST: UpdateItem) -->
+    <mxCell id="e-visitor-dynamo" value="GET: Scan&#xa;POST: UpdateItem&#xa;(CloudFront-Viewer-Country)"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#C7131F;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+      edge="1" source="lambda-visitor" target="dynamo" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- EDGES — Secret Rotation                                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- EventBridge → Lambda Rotator -->
+    <mxCell id="e-eb-rotate" value="scheduled trigger"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#82b366;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+      edge="1" source="eventbridge" target="lambda-rotate" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Rotator → SSM (update secret) -->
+    <mxCell id="e-rotate-ssm" value="1. update secret"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#82b366;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+      edge="1" source="lambda-rotate" target="ssm" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Lambda Rotator → CloudFront (2. update origin header) -->
+    <mxCell id="e-rotate-cf" value="2. update origin header"
+      style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;fontColor=#555;strokeColor=#82b366;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+      edge="1" source="lambda-rotate" target="cf" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="410" y="830" />
+          <mxPoint x="380" y="830" />
+          <mxPoint x="380" y="500" />
+          <mxPoint x="490" y="500" />
+          <mxPoint x="490" y="430" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
