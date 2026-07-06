@@ -7,7 +7,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^7.0.3",
+    "astro": "^7.0.6",
     "leaflet": "^1.9.4"
   }
 }
