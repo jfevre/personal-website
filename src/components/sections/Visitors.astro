@@ -75,29 +75,14 @@
     margin-top: 12px;
   }
 
-  /* ── Top country card (seamless, no split line) ── */
+  /* ── Top country card (split-flap, halves built by JS) ── */
   .ftd-card {
     width: 100%;
     height: clamp(50px, 6vw, 64px);
-    background: var(--color-navy-light);
     border-radius: 5px;
-    border: 0.5px solid rgba(0, 0, 0, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
-  }
-
-  .ftd-value {
-    font-family: var(--font-mono);
-    font-size: clamp(14px, 1.8vw, 19px);
-    font-weight: 700;
-    color: var(--color-accent);
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 90%;
+    position: relative;
+    perspective: 400px;
   }
 
   /* ── Map ─────────────────────────────────────── */
@@ -167,6 +152,7 @@
     height: clamp(50px, 6vw, 64px);
     font-family: var(--font-mono);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+    perspective: 400px;
   }
 
   .fc-half {
@@ -184,12 +170,14 @@
     top: 0;
     align-items: flex-end;
     border-radius: 5px 5px 0 0;
+    border-bottom: none;
   }
 
   .fc-bottom {
     bottom: 0;
     align-items: flex-start;
     border-radius: 0 0 5px 5px;
+    border-top: none;
   }
 
   .fc-digit {
@@ -205,7 +193,7 @@
 
   .fc-flap            { z-index: 2; }
   .fc-flap.fc-top     { transform-origin: bottom; }
-  .fc-flap.fc-bottom  { transform-origin: top; transform: rotateX(90deg); }
+  .fc-flap.fc-bottom  { transform-origin: top; transform: rotateX(-90deg); }
 
   .fc-divider {
     position: absolute;
@@ -216,6 +204,42 @@
     transform: translateY(-0.5px);
     pointer-events: none;
   }
+
+  /* ── Top country split-flap halves (JS-created) ── */
+  .ftd-half {
+    position: absolute;
+    left: 0; right: 0;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-navy-light);
+    border: 0.5px solid rgba(0, 0, 0, 0.45);
+  }
+  .ftd-top    { top: 0;    align-items: flex-end;   border-radius: 5px 5px 0 0; border-bottom: none; }
+  .ftd-bottom { bottom: 0; align-items: flex-start; border-radius: 0 0 5px 5px; border-top: none; }
+  .ftd-flap            { z-index: 2; }
+  .ftd-flap.ftd-top    { transform-origin: bottom; }
+  .ftd-flap.ftd-bottom { transform-origin: top; }
+  .ftd-divider {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    transform: translateY(-0.5px);
+    pointer-events: none;
+  }
+  .ftd-value {
+    font-family: var(--font-mono);
+    font-size: clamp(14px, 1.8vw, 19px);
+    font-weight: 700;
+    color: var(--color-accent);
+    white-space: nowrap;
+    max-width: 90%;
+  }
+  .ftd-top    .ftd-value { transform: translateY(50%); }
+  .ftd-bottom .ftd-value { transform: translateY(-50%); }
 </style>
 
 <script>
@@ -279,12 +303,9 @@
     const sBottom = makeHalf('bottom', false, ch);
     const fTop    = makeHalf('top',    true,  ch);
     const fBottom = makeHalf('bottom', true,  ch);
-    fBottom.el.style.transform = 'rotateX(90deg)'; // starts hidden
+    fBottom.el.style.transform = 'rotateX(-90deg)'; // starts hidden behind card
 
-    const divider = document.createElement('div');
-    divider.className = 'fc-divider';
-
-    card.append(sTop.el, sBottom.el, fTop.el, fBottom.el, divider);
+    card.append(sTop.el, sBottom.el, fTop.el, fBottom.el);
 
     return {
       card,
@@ -301,31 +322,30 @@
     const oldVal = parts.staticTop.textContent ?? '0';
     if (oldVal === newVal) return;
 
+    // staticTop immediately shows new value; flapTop (z-index 2) covers it showing old
     parts.staticTop.textContent = newVal;
     parts.flapTopSpan.textContent = oldVal;
-    parts.flapTop.style.transform = 'rotateX(0deg)';
 
+    // Phase 1: top half of old digit falls forward
+    parts.flapTop.style.transform = 'rotateX(90deg)'; // landing state — element rests here when done
     const anim1 = parts.flapTop.animate(
-      [{ transform: 'perspective(400px) rotateX(0deg)' },
-       { transform: 'perspective(400px) rotateX(-90deg)' }],
-      { duration: halfDuration, easing: 'ease-in', fill: 'forwards' }
+      [{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(90deg)' }],
+      { duration: halfDuration, easing: 'ease-in', fill: 'backwards' }
     );
 
     anim1.onfinish = () => {
-      parts.flapTop.style.transform = 'rotateX(0deg)';
-      parts.flapTopSpan.textContent = newVal;
+      parts.flapTopSpan.textContent = newVal; // flapTop now matches staticTop (invisible at 90°)
 
-      parts.staticBottom.textContent = newVal;
+      // Phase 2: bottom half of new digit swings in immediately
       parts.flapBottomSpan.textContent = newVal;
-      parts.flapBottom.style.transform = 'rotateX(90deg)';
-
+      parts.flapBottom.style.transform = 'rotateX(0deg)'; // landing state
       const anim2 = parts.flapBottom.animate(
-        [{ transform: 'perspective(400px) rotateX(90deg)' },
-         { transform: 'perspective(400px) rotateX(0deg)' }],
-        { duration: halfDuration, easing: 'ease-out', fill: 'forwards' }
+        [{ transform: 'rotateX(-90deg)' }, { transform: 'rotateX(0deg)' }],
+        { duration: halfDuration, easing: 'ease-out', fill: 'backwards' }
       );
       anim2.onfinish = () => {
-        parts.flapBottom.style.transform = 'rotateX(90deg)';
+        parts.staticBottom.textContent = newVal;
+        parts.flapBottom.style.transform = 'rotateX(-90deg)'; // reset for next flip
       };
     };
   }
@@ -404,34 +424,72 @@
     }
   }
 
-  // ── Flip Text (top country — whole-card flip, no seam) ──
+  // ── Flip Text (top country — proper split-flap, top half falls / bottom swings in) ──
   class FlipText {
-    private valueEl: HTMLSpanElement;
+    private staticTopSpan: HTMLSpanElement;
+    private staticBottomSpan: HTMLSpanElement;
+    private flapTopEl: HTMLDivElement;
+    private flapTopSpan: HTMLSpanElement;
+    private flapBottomEl: HTMLDivElement;
+    private flapBottomSpan: HTMLSpanElement;
     private current = '-';
 
     constructor(container: HTMLElement) {
-      this.valueEl = container.querySelector<HTMLSpanElement>('.ftd-value')!;
+      const half = (pos: 'top' | 'bottom', isFlap: boolean, text: string) => {
+        const el = document.createElement('div') as HTMLDivElement;
+        el.className = `ftd-half ftd-${pos}${isFlap ? ' ftd-flap' : ''}`;
+        const span = document.createElement('span') as HTMLSpanElement;
+        span.className = 'ftd-value';
+        span.textContent = text;
+        el.appendChild(span);
+        return { el, span };
+      };
+
+      const sTop    = half('top',    false, '-');
+      const sBottom = half('bottom', false, '-');
+      const fTop    = half('top',    true,  '-');
+      const fBottom = half('bottom', true,  '-');
+      fBottom.el.style.transform = 'rotateX(-90deg)';
+
+      container.innerHTML = '';
+      container.append(sTop.el, sBottom.el, fTop.el, fBottom.el);
+
+      this.staticTopSpan    = sTop.span;
+      this.staticBottomSpan = sBottom.span;
+      this.flapTopEl        = fTop.el;
+      this.flapTopSpan      = fTop.span;
+      this.flapBottomEl     = fBottom.el;
+      this.flapBottomSpan   = fBottom.span;
     }
 
     update(text: string) {
       if (text === this.current) return;
       this.current = text;
-      const el = this.valueEl;
+      const HALF_MS = 200;
 
-      const anim1 = el.animate(
-        [{ transform: 'perspective(400px) rotateX(0deg)',   opacity: '1' },
-         { transform: 'perspective(400px) rotateX(-90deg)', opacity: '0' }],
-        { duration: 200, easing: 'ease-in', fill: 'forwards' }
+      const oldText = this.staticTopSpan.textContent ?? '-';
+      this.staticTopSpan.textContent = text;
+      this.flapTopSpan.textContent = oldText;
+
+      this.flapTopEl.style.transform = 'rotateX(90deg)';
+      const anim1 = this.flapTopEl.animate(
+        [{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(90deg)' }],
+        { duration: HALF_MS, easing: 'ease-in', fill: 'backwards' }
       );
 
       anim1.onfinish = () => {
-        anim1.cancel(); // clears fill so it no longer holds opacity:0
-        el.textContent = text;
-        el.animate(
-          [{ transform: 'perspective(400px) rotateX(90deg)',  opacity: '0' },
-           { transform: 'perspective(400px) rotateX(0deg)',   opacity: '1' }],
-          { duration: 200, easing: 'ease-out' }
+        this.flapTopSpan.textContent = text;
+
+        this.flapBottomSpan.textContent = text;
+        this.flapBottomEl.style.transform = 'rotateX(0deg)';
+        const anim2 = this.flapBottomEl.animate(
+          [{ transform: 'rotateX(-90deg)' }, { transform: 'rotateX(0deg)' }],
+          { duration: HALF_MS, easing: 'ease-out', fill: 'backwards' }
         );
+        anim2.onfinish = () => {
+          this.staticBottomSpan.textContent = text;
+          this.flapBottomEl.style.transform = 'rotateX(-90deg)';
+        };
       };
     }
   }
@@ -599,9 +657,18 @@
     countryCountFlip.animateIn(data.visitors?.length ?? 0);
 
     if (data.visitors?.length > 0) {
-      const top  = data.visitors[0];
-      const name = displayNames?.of(top.country) ?? countryNames[top.country] ?? top.country;
-      topCountryFlip.update(name);
+      const visitors = data.visitors as { country: string; count: number }[];
+      const toName = (v: { country: string }) =>
+        displayNames?.of(v.country) ?? countryNames[v.country] ?? v.country;
+
+      // Cycle: non-top countries ascending by count (lowest first), then the winner
+      const others = visitors.slice(1).slice().reverse();
+      const sequence = [...others, visitors[0]].map(toName);
+
+      const FLIP_STEP = 500; // ms between each flip (400ms anim + 100ms pause)
+      sequence.forEach((name, i) => {
+        setTimeout(() => topCountryFlip.update(name), i * FLIP_STEP);
+      });
     }
   }
 
