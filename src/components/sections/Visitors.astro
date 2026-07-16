@@ -10,15 +10,17 @@
   <div class="visitors-content fade-up">
     <div class="stats-panel">
       <div class="stat">
-        <div class="stat-value" id="total-visitors">-</div>
+        <div class="flip-number" id="total-visitors" role="status" aria-label="Total visitors"></div>
         <div class="stat-label">Total Visitors</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="top-country">-</div>
+        <div class="ftd-card" id="top-country" role="status" aria-label="Top country by visitors">
+          <span class="ftd-value">-</span>
+        </div>
         <div class="stat-label">Top Country</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="country-count">-</div>
+        <div class="flip-number" id="country-count" role="status" aria-label="Number of countries"></div>
         <div class="stat-label">Countries</div>
       </div>
     </div>
@@ -31,10 +33,9 @@
   </div>
 </section>
 
+<!-- Scoped styles — applied to template elements (they receive the Astro cid attribute) -->
 <style>
-  #visitors {
-    position: relative;
-  }
+  #visitors { position: relative; }
 
   .visitors-content {
     display: flex;
@@ -56,6 +57,9 @@
     text-align: center;
     border: 1px solid var(--color-slate-dark);
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .stat:hover {
@@ -63,21 +67,40 @@
     transform: translateY(-2px);
   }
 
-  .stat-value {
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: 600;
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    margin-bottom: 8px;
-  }
-
   .stat-label {
     font-size: 14px;
     color: var(--color-slate);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    margin-top: 12px;
   }
 
+  /* ── Top country card (seamless, no split line) ── */
+  .ftd-card {
+    width: 100%;
+    height: clamp(50px, 6vw, 64px);
+    background: var(--color-navy-light);
+    border-radius: 5px;
+    border: 0.5px solid rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  .ftd-value {
+    font-family: var(--font-mono);
+    font-size: clamp(14px, 1.8vw, 19px);
+    font-weight: 700;
+    color: var(--color-accent);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+
+  /* ── Map ─────────────────────────────────────── */
   .map-container {
     width: 100%;
     height: 600px;
@@ -97,30 +120,101 @@
     font-size: 14px;
   }
 
-  .map-error {
-    color: var(--color-accent);
-  }
+  .map-error { color: var(--color-accent); }
 
   @media (max-width: 1080px) {
-    .map-container {
-      height: 500px;
-    }
-    .stats-panel {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .map-container { height: 500px; }
+    .stats-panel   { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 768px) {
-    .map-container {
-      height: 400px;
-    }
-    .stats-panel {
-      grid-template-columns: 1fr;
-      gap: 15px;
-    }
-    .stat {
-      padding: 15px;
-    }
+    .map-container { height: 400px; }
+    .stats-panel   { grid-template-columns: 1fr; gap: 15px; }
+    .stat          { padding: 15px; }
+  }
+</style>
+
+<!--
+  Global styles for flip-number cards.
+  These elements are created dynamically via JS so they never receive
+  the Astro scoped-cid attribute — a scoped <style> block won't reach them.
+-->
+<style is:global>
+  .flip-number {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    perspective: 400px;
+    min-height: 64px;
+  }
+
+  .flip-sep {
+    font-family: var(--font-mono);
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.45;
+    line-height: 1;
+    margin: 0 1px;
+    margin-top: -4px;
+    user-select: none;
+  }
+
+  .fc-card {
+    position: relative;
+    width: clamp(34px, 4vw, 44px);
+    height: clamp(50px, 6vw, 64px);
+    font-family: var(--font-mono);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  .fc-half {
+    position: absolute;
+    left: 0; right: 0;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-navy-light);
+    border: 0.5px solid rgba(0, 0, 0, 0.45);
+  }
+
+  .fc-top {
+    top: 0;
+    align-items: flex-end;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .fc-bottom {
+    bottom: 0;
+    align-items: flex-start;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .fc-digit {
+    font-size: clamp(26px, 3.2vw, 36px);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  /* Key trick: centres the character exactly on the fold line */
+  .fc-top    .fc-digit { transform: translateY(50%); }
+  .fc-bottom .fc-digit { transform: translateY(-50%); }
+
+  .fc-flap            { z-index: 2; }
+  .fc-flap.fc-top     { transform-origin: bottom; }
+  .fc-flap.fc-bottom  { transform-origin: top; transform: rotateX(90deg); }
+
+  .fc-divider {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    transform: translateY(-0.5px);
+    pointer-events: none;
   }
 </style>
 
@@ -128,7 +222,6 @@
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
 
-  // Demo data for testing (will be replaced by API data)
   const demoData = {
     visitors: [
       { country: 'US', count: 450 },
@@ -149,300 +242,385 @@
   let geoJsonLayer: L.GeoJSON | null = null;
   let visitorData: { country: string; count: number }[] = [];
   let maxCount = 0;
-  // Populated from GeoJSON — maps ISO-2 code to full country name
   const countryNames: Record<string, string> = {};
 
-  // Use Intl.DisplayNames for short localised country names where available
   const displayNames = typeof Intl !== 'undefined' && Intl.DisplayNames
     ? new Intl.DisplayNames(['en'], { type: 'region' })
     : null;
 
-  // API endpoint - use full URL for local dev, relative path for production
   const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const API_ENDPOINT = isLocalDev ? 'https://john.fevre.uk/api/visitors' : '/api/visitors';
 
-  // Validate ISO-2 country code format
+  // ── Flip Clock ──────────────────────────────────────
+  interface CardParts {
+    staticTop: HTMLSpanElement;
+    staticBottom: HTMLSpanElement;
+    flapTop: HTMLDivElement;
+    flapTopSpan: HTMLSpanElement;
+    flapBottom: HTMLDivElement;
+    flapBottomSpan: HTMLSpanElement;
+  }
+
+  function makeHalf(pos: 'top' | 'bottom', isFlap: boolean, ch: string) {
+    const el = document.createElement('div');
+    el.className = `fc-half fc-${pos}${isFlap ? ' fc-flap' : ''}`;
+    const span = document.createElement('span');
+    span.className = 'fc-digit';
+    span.textContent = ch;
+    el.appendChild(span);
+    return { el, span };
+  }
+
+  function makeDigitCard(ch: string): { card: HTMLDivElement; parts: CardParts } {
+    const card = document.createElement('div');
+    card.className = 'fc-card';
+
+    const sTop    = makeHalf('top',    false, ch);
+    const sBottom = makeHalf('bottom', false, ch);
+    const fTop    = makeHalf('top',    true,  ch);
+    const fBottom = makeHalf('bottom', true,  ch);
+    fBottom.el.style.transform = 'rotateX(90deg)'; // starts hidden
+
+    const divider = document.createElement('div');
+    divider.className = 'fc-divider';
+
+    card.append(sTop.el, sBottom.el, fTop.el, fBottom.el, divider);
+
+    return {
+      card,
+      parts: {
+        staticTop: sTop.span,   staticBottom: sBottom.span,
+        flapTop: fTop.el,       flapTopSpan: fTop.span,
+        flapBottom: fBottom.el, flapBottomSpan: fBottom.span,
+      },
+    };
+  }
+
+  // halfDuration: ms for each of the two half-flips (top away, bottom in)
+  function flipDigit(parts: CardParts, newVal: string, halfDuration = 250) {
+    const oldVal = parts.staticTop.textContent ?? '0';
+    if (oldVal === newVal) return;
+
+    parts.staticTop.textContent = newVal;
+    parts.flapTopSpan.textContent = oldVal;
+    parts.flapTop.style.transform = 'rotateX(0deg)';
+
+    const anim1 = parts.flapTop.animate(
+      [{ transform: 'perspective(400px) rotateX(0deg)' },
+       { transform: 'perspective(400px) rotateX(-90deg)' }],
+      { duration: halfDuration, easing: 'ease-in', fill: 'forwards' }
+    );
+
+    anim1.onfinish = () => {
+      parts.flapTop.style.transform = 'rotateX(0deg)';
+      parts.flapTopSpan.textContent = newVal;
+
+      parts.staticBottom.textContent = newVal;
+      parts.flapBottomSpan.textContent = newVal;
+      parts.flapBottom.style.transform = 'rotateX(90deg)';
+
+      const anim2 = parts.flapBottom.animate(
+        [{ transform: 'perspective(400px) rotateX(90deg)' },
+         { transform: 'perspective(400px) rotateX(0deg)' }],
+        { duration: halfDuration, easing: 'ease-out', fill: 'forwards' }
+      );
+      anim2.onfinish = () => {
+        parts.flapBottom.style.transform = 'rotateX(90deg)';
+      };
+    };
+  }
+
+  class FlipNumber {
+    private el: HTMLElement;
+    private cards: CardParts[] = [];
+    private currentStr: string | null = null;
+
+    constructor(el: HTMLElement) { this.el = el; }
+
+    animateIn(value: number) {
+      const targetStr = value.toLocaleString('en-US');
+      const zeroStr   = targetStr.replace(/[0-9]/g, '0');
+      this.build(zeroStr);
+      // Mark as final immediately so a concurrent update() call is a no-op
+      this.currentStr = targetStr;
+
+      // Each count-up flip: 100 ms each half → 200 ms total, 20 ms buffer between flips
+      const HALF_MS       = 150;
+      const FLIP_INTERVAL = HALF_MS * 2 + 20; // 220 ms between flips
+      const START_DELAY   = 250;
+
+      let ci = 0;
+      for (let i = 0; i < targetStr.length; i++) {
+        if (targetStr[i] === ',') continue;
+        const target = parseInt(targetStr[i], 10);
+        const card   = this.cards[ci];
+        // Schedule one flip per step: 0→1, 1→2, …, (target-1)→target
+        for (let step = 1; step <= target; step++) {
+          setTimeout(
+            () => flipDigit(card, String(step), HALF_MS),
+            START_DELAY + (step - 1) * FLIP_INTERVAL
+          );
+        }
+        ci++;
+      }
+    }
+
+    update(value: number) {
+      const str = value.toLocaleString('en-US');
+      if (str === this.currentStr) return;
+
+      if (!this.currentStr || this.shape(str) !== this.shape(this.currentStr)) {
+        this.build(str);
+        this.currentStr = str;
+        return;
+      }
+
+      let ci = 0;
+      for (let i = 0; i < str.length; i++) {
+        if (str[i] === ',') continue;
+        if (str[i] !== this.currentStr[i]) flipDigit(this.cards[ci], str[i]);
+        ci++;
+      }
+      this.currentStr = str;
+    }
+
+    private shape(s: string) { return s.replace(/[0-9]/g, 'd'); }
+
+    private build(str: string) {
+      this.el.innerHTML = '';
+      this.cards = [];
+      for (const ch of str) {
+        if (ch === ',') {
+          const sep = document.createElement('span');
+          sep.className = 'flip-sep';
+          sep.textContent = ',';
+          this.el.appendChild(sep);
+        } else {
+          const { card, parts } = makeDigitCard(ch);
+          this.el.appendChild(card);
+          this.cards.push(parts);
+        }
+      }
+    }
+  }
+
+  // ── Flip Text (top country — whole-card flip, no seam) ──
+  class FlipText {
+    private valueEl: HTMLSpanElement;
+    private current = '-';
+
+    constructor(container: HTMLElement) {
+      this.valueEl = container.querySelector<HTMLSpanElement>('.ftd-value')!;
+    }
+
+    update(text: string) {
+      if (text === this.current) return;
+      this.current = text;
+      const el = this.valueEl;
+
+      const anim1 = el.animate(
+        [{ transform: 'perspective(400px) rotateX(0deg)',   opacity: '1' },
+         { transform: 'perspective(400px) rotateX(-90deg)', opacity: '0' }],
+        { duration: 200, easing: 'ease-in', fill: 'forwards' }
+      );
+
+      anim1.onfinish = () => {
+        anim1.cancel(); // clears fill so it no longer holds opacity:0
+        el.textContent = text;
+        el.animate(
+          [{ transform: 'perspective(400px) rotateX(90deg)',  opacity: '0' },
+           { transform: 'perspective(400px) rotateX(0deg)',   opacity: '1' }],
+          { duration: 200, easing: 'ease-out' }
+        );
+      };
+    }
+  }
+
+  // Instances
+  let totalFlip: FlipNumber;
+  let countryCountFlip: FlipNumber;
+  let topCountryFlip: FlipText;
+
+  // ── Validation ──────────────────────────────────────
   function isValidCountryCode(code: unknown): code is string {
     return typeof code === 'string' && /^[A-Z]{2}$/.test(code);
   }
 
-  // Validate visitor count is a safe number
   function isValidCount(count: unknown): count is number {
-    return typeof count === 'number' &&
-           Number.isInteger(count) &&
-           count >= 0 &&
-           count < 10000000;
+    return typeof count === 'number' && Number.isInteger(count) && count >= 0 && count < 10000000;
   }
 
-  // Validate and sanitize visitor data from API
   function validateVisitorData(data: unknown): { visitors: { country: string; count: number }[]; total: number } {
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid data structure');
-    }
-
+    if (!data || typeof data !== 'object') throw new Error('Invalid data structure');
     const obj = data as Record<string, unknown>;
-
-    if (!Array.isArray(obj.visitors)) {
-      throw new Error('Visitors must be an array');
-    }
+    if (!Array.isArray(obj.visitors)) throw new Error('Visitors must be an array');
 
     const validatedVisitors = obj.visitors
       .filter((v): v is { country: string; count: number } => {
         if (!v || typeof v !== 'object') return false;
-        const visitor = v as Record<string, unknown>;
-        return isValidCountryCode(visitor.country) && isValidCount(visitor.count);
+        const vis = v as Record<string, unknown>;
+        return isValidCountryCode(vis.country) && isValidCount(vis.count);
       })
-      .slice(0, 200); // Limit to prevent DoS
+      .slice(0, 200);
 
-    const total = isValidCount(obj.total) ? obj.total : validatedVisitors.reduce((sum, v) => sum + v.count, 0);
-
+    const total = isValidCount(obj.total) ? obj.total : validatedVisitors.reduce((s, v) => s + v.count, 0);
     return { visitors: validatedVisitors, total };
   }
 
-  // Create safe popup content using DOM methods (prevents XSS)
   function createPopupContent(countryName: string, visitorCount: number): HTMLElement {
     const container = document.createElement('div');
     container.style.fontFamily = 'var(--font-sans)';
     container.style.padding = '5px';
-
-    const countryEl = document.createElement('strong');
-    countryEl.textContent = countryName; // Safe - uses textContent
-    container.appendChild(countryEl);
-
+    const strong = document.createElement('strong');
+    strong.textContent = countryName;
+    container.appendChild(strong);
     container.appendChild(document.createElement('br'));
-
-    const visitorsText = document.createTextNode('Visitors: ');
-    container.appendChild(visitorsText);
-
-    const countSpan = document.createElement('span');
-    countSpan.style.color = 'var(--color-accent)';
-    countSpan.style.fontWeight = '600';
-    countSpan.textContent = visitorCount.toLocaleString();
-    container.appendChild(countSpan);
-
+    container.appendChild(document.createTextNode('Visitors: '));
+    const span = document.createElement('span');
+    span.style.color = 'var(--color-accent)';
+    span.style.fontWeight = '600';
+    span.textContent = visitorCount.toLocaleString();
+    container.appendChild(span);
     return container;
   }
 
-  // Initialize map
+  // ── Map ─────────────────────────────────────────────
   function initMap() {
-    const mapContainer = document.getElementById('map');
-    if (!mapContainer) return;
+    if (!document.getElementById('map')) return;
+
+    totalFlip        = new FlipNumber(document.getElementById('total-visitors')!);
+    countryCountFlip = new FlipNumber(document.getElementById('country-count')!);
+    topCountryFlip   = new FlipText(document.getElementById('top-country')!);
 
     map = L.map('map', {
-      center: [20, 0],
-      zoom: 2,
-      minZoom: 2,
-      maxZoom: 6,
-      zoomControl: true,
-      scrollWheelZoom: false
+      center: [20, 0], zoom: 2, minZoom: 2, maxZoom: 6,
+      zoomControl: true, scrollWheelZoom: false,
     });
-
-    // Add base tile layer - theme will be applied after
     updateMapTiles();
-
-    // Load GeoJSON and visitor data
     loadData();
   }
 
-  // Update map tiles based on theme
   function updateMapTiles() {
     if (!map) return;
-
-    // Remove existing tile layers
-    map.eachLayer((layer) => {
-      if (layer instanceof L.TileLayer) {
-        map?.removeLayer(layer);
+    map.eachLayer(l => { if (l instanceof L.TileLayer) map?.removeLayer(l); });
+    const dark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+    L.tileLayer(
+      dark
+        ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+      {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd', maxZoom: 20,
       }
-    });
-
-    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-
-    if (theme === 'dark') {
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20
-      }).addTo(map);
-    } else {
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20
-      }).addTo(map);
-    }
+    ).addTo(map);
   }
 
-  // Fetch visitor data from API with timeout
-  // POST records the visit (CloudFront adds country header server-side)
-  // GET would fetch counts without recording
   async function fetchVisitorData() {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 10000);
     try {
-      const response = await fetch(API_ENDPOINT, {
-        method: 'POST',
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-
-      if (!response.ok) throw new Error('API request failed');
-
-      const data = await response.json();
-      return validateVisitorData(data);
-    } catch (error) {
-      // Don't expose error details in production
+      const res = await fetch(API_ENDPOINT, { method: 'POST', signal: ctrl.signal });
+      clearTimeout(tid);
+      if (!res.ok) throw new Error('API error');
+      return validateVisitorData(await res.json());
+    } catch {
       console.warn('Failed to load visitor data');
       document.getElementById('map-error')!.style.display = 'block';
       return demoData;
     }
   }
 
-  // Load GeoJSON and visitor data
   async function loadData() {
     try {
       document.getElementById('map-loading')!.style.display = 'block';
-
-      // Fetch visitor data and GeoJSON in parallel
-      const [data, geoJsonResponse] = await Promise.all([
-        fetchVisitorData(),
-        fetch('/countries.geojson')
-      ]);
+      const [data, geoRes] = await Promise.all([fetchVisitorData(), fetch('/countries.geojson')]);
 
       visitorData = data.visitors || [];
-      maxCount = Math.max(...visitorData.map(v => v.count), 1);
+      maxCount    = Math.max(...visitorData.map(v => v.count), 1);
+      const geoJson = await geoRes.json();
 
-      // Load and style GeoJSON
-      const geoJson = await geoJsonResponse.json();
-
-      // Build ISO-2 → country name lookup from GeoJSON before updating stats
-      for (const feature of geoJson.features ?? []) {
-        const code = feature?.properties?.['ISO3166-1-Alpha-2'];
-        const name = feature?.properties?.name;
-        if (isValidCountryCode(code) && typeof name === 'string') {
-          countryNames[code] = name;
-        }
+      for (const f of geoJson.features ?? []) {
+        const code = f?.properties?.['ISO3166-1-Alpha-2'];
+        const name = f?.properties?.name;
+        if (isValidCountryCode(code) && typeof name === 'string') countryNames[code] = name;
       }
 
-      // Update stats after countryNames is populated
       updateStats(data);
 
       if (map) {
         geoJsonLayer = L.geoJSON(geoJson, {
-          style: (feature) => getCountryStyle(feature),
-          onEachFeature: (feature, layer) => {
-            const countryCode = feature?.properties?.['ISO3166-1-Alpha-2'];
-
-            // Validate country code format (ISO-2)
-            if (!isValidCountryCode(countryCode)) return;
-
-            const visitorCount = visitorData.find(v => v.country === countryCode)?.count || 0;
-
-            if (visitorCount > 0) {
-              // Use safe DOM methods to prevent XSS
-              const countryName = String(feature.properties.name || 'Unknown');
-              layer.bindPopup(createPopupContent(countryName, visitorCount));
-            }
-          }
+          style: f => getCountryStyle(f),
+          onEachFeature: (f, layer) => {
+            const code = f?.properties?.['ISO3166-1-Alpha-2'];
+            if (!isValidCountryCode(code)) return;
+            const cnt = visitorData.find(v => v.country === code)?.count || 0;
+            if (cnt > 0) layer.bindPopup(createPopupContent(String(f.properties.name || 'Unknown'), cnt));
+          },
         }).addTo(map);
       }
 
       document.getElementById('map-loading')!.style.display = 'none';
-    } catch (error) {
-      // Don't expose error details in production
+    } catch {
       console.warn('Failed to load map data');
       document.getElementById('map-loading')!.style.display = 'none';
       document.getElementById('map-error')!.style.display = 'block';
     }
   }
 
-  // Get color for country based on visitor count
   function getCountryColor(count: number): string {
     if (count === 0) return 'transparent';
-
-    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const dark      = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
     const intensity = Math.min(count / maxCount, 1);
-
-    if (theme === 'dark') {
-      // Orange gradient for dark mode
-      const r = 255;
+    if (dark) {
       const g = Math.floor(107 + (255 - 107) * (1 - intensity));
-      const b = Math.floor(53 + (200 - 53) * (1 - intensity));
-      return `rgb(${r}, ${g}, ${b})`;
-    } else {
-      // Green gradient for light mode
-      const r = Math.floor(31 + (150 - 31) * (1 - intensity));
-      const g = Math.floor(95 + (200 - 95) * (1 - intensity));
-      const b = Math.floor(31 + (150 - 31) * (1 - intensity));
-      return `rgb(${r}, ${g}, ${b})`;
+      const b = Math.floor(53  + (200 - 53)  * (1 - intensity));
+      return `rgb(255,${g},${b})`;
     }
+    const r = Math.floor(31 + (150 - 31) * (1 - intensity));
+    const g = Math.floor(95 + (200 - 95) * (1 - intensity));
+    return `rgb(${r},${g},${r})`;
   }
 
-  // Get style for country feature
   function getCountryStyle(feature: any): L.PathOptions {
-    const countryCode = feature?.properties?.['ISO3166-1-Alpha-2'];
-
-    // Validate country code before using
-    if (!isValidCountryCode(countryCode)) {
-      return { fillOpacity: 0, opacity: 0.3, color: '#444', weight: 0.5 };
-    }
-
-    const count = visitorData.find(v => v.country === countryCode)?.count || 0;
-
+    const code = feature?.properties?.['ISO3166-1-Alpha-2'];
+    if (!isValidCountryCode(code)) return { fillOpacity: 0, opacity: 0.3, color: '#444', weight: 0.5 };
+    const count = visitorData.find(v => v.country === code)?.count || 0;
     return {
-      fillColor: getCountryColor(count),
+      fillColor:   getCountryColor(count),
       fillOpacity: count > 0 ? 0.7 : 0,
-      color: count > 0 ? '#fff' : '#444',
-      weight: count > 0 ? 1 : 0.5,
-      opacity: count > 0 ? 0.8 : 0.3
+      color:       count > 0 ? '#fff' : '#444',
+      weight:      count > 0 ? 1 : 0.5,
+      opacity:     count > 0 ? 0.8 : 0.3,
     };
   }
 
-  // Update statistics panel
   function updateStats(data: any) {
-    document.getElementById('total-visitors')!.textContent = data.total?.toLocaleString() || '0';
-    document.getElementById('country-count')!.textContent = data.visitors?.length?.toString() || '0';
+    totalFlip.animateIn(data.total ?? 0);
+    countryCountFlip.animateIn(data.visitors?.length ?? 0);
 
-    if (data.visitors && data.visitors.length > 0) {
-      const topCountry = data.visitors[0];
-      const name = displayNames?.of(topCountry.country)
-        ?? countryNames[topCountry.country]
-        ?? topCountry.country;
-      document.getElementById('top-country')!.textContent = name;
+    if (data.visitors?.length > 0) {
+      const top  = data.visitors[0];
+      const name = displayNames?.of(top.country) ?? countryNames[top.country] ?? top.country;
+      topCountryFlip.update(name);
     }
   }
 
-  // Update map theme
   function updateMapTheme() {
     updateMapTiles();
     if (geoJsonLayer && map) {
-      geoJsonLayer.eachLayer((layer: any) => {
-        if (layer.feature) {
-          layer.setStyle(getCountryStyle(layer.feature));
-        }
-      });
+      geoJsonLayer.eachLayer((l: any) => { if (l.feature) l.setStyle(getCountryStyle(l.feature)); });
     }
   }
 
-  // Watch for theme changes
-  const observer = new MutationObserver(() => {
-    updateMapTheme();
-  });
+  const themeObserver = new MutationObserver(updateMapTheme);
 
-  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initMap();
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme']
-      });
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     });
   } else {
     initMap();
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 </script>
