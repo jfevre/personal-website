@@ -1,0 +1,16 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "page",
+  "shape": "Session",
+  "theme": "terminal",
+  "hero": "Split",
+  "nav": "bar",
+  "footer": "one line",
+  "imagery": "glyph headshot",
+  "signature": "headshot printed in bio characters",
+  "prompt": "personal CV site for a cloud and DevOps engineer",
+  "date": "2026-10-29"
+ }
+]

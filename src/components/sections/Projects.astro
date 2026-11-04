@@ -5,238 +5,75 @@ const others = projects.filter(p => !p.featured);
 ---
 
 <section id="projects">
-  <h2 class="section-heading fade-up" data-number="03.">Things I've Built</h2>
-
-  <!-- Featured projects (large cards) -->
-  <ul class="featured-list">
-    {featured.map((project, i) => (
-      <li class={`featured-project slide-in ${i % 2 !== 0 ? 'from-right' : 'from-left'}`}>
-        <div class={`project-content ${i % 2 !== 0 ? 'right' : ''}`}>
-          <h3 class="project-name">{project.name}</h3>
-          <div class="project-description">
-            <p>{project.description}</p>
-          </div>
-          <ul class="project-tech">
-            {project.tech.map(t => <li>{t}</li>)}
-          </ul>
-          {(project.github || project.external) && (
-            <div class="project-links-wrapper">
-              <button class="links-toggle" aria-expanded="false">View Links</button>
-              <div class="project-links hidden">
-                {project.github && (
-                  <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
-                )}
-                {project.external && (
-                  <a href={project.external} target="_blank" rel="noreferrer">Live Site</a>
-                )}
-              </div>
+  <div class="container split">
+    <div class="head"><h2>Projects</h2></div>
+    <article class="projects-body">
+      <ul class="featured-list">
+        {featured.map((project) => (
+          <li class="featured-project">
+            <div class="project-head">
+              <h3 class="project-name">{project.name}</h3>
+              {(project.github || project.external) && (
+                <p class="project-links">
+                  {project.github && <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>}
+                  {project.external && <a href={project.external} target="_blank" rel="noreferrer">Live Site</a>}
+                </p>
+              )}
             </div>
-          )}
-        </div>
-        {project.image && (
-          <div class="project-image">
-            <img src={project.image} alt={project.name} />
-          </div>
-        )}
-      </li>
-    ))}
-  </ul>
-
-  <!-- Other projects grid -->
-  {others.length > 0 && (
-    <>
-      <h3 class="other-heading fade-up">Other Noteworthy Projects</h3>
-      <ul class="other-grid">
-        {others.map((project, i) => (
-          <li class={`other-project slide-in ${i % 2 === 0 ? 'from-left' : 'from-right'}`}>
-            <div class="other-top">
-              <span class="folder-icon">📁</span>
-            </div>
-            <h3>{project.name}</h3>
-            <p>{project.description}</p>
-            <ul class="tech-list">
+            <p class="project-description">{project.description}</p>
+            <ul class="project-tech">
               {project.tech.map(t => <li>{t}</li>)}
             </ul>
-            {project.github && (
-              <div class="project-links-wrapper">
-                <button class="links-toggle" aria-expanded="false">View Links</button>
-                <div class="project-links hidden">
-                  <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
-                </div>
-              </div>
-            )}
+            {project.image && <img src={project.image} alt={project.name} />}
           </li>
         ))}
       </ul>
-    </>
-  )}
+
+      {others.length > 0 && (
+        <>
+          <h3 class="other-heading">Other noteworthy projects</h3>
+          <ul class="other-grid">
+            {others.map((project) => (
+              <li class="other-project">
+                <h3>{project.name}</h3>
+                <p>{project.description}</p>
+                <ul class="project-tech">
+                  {project.tech.map(t => <li>{t}</li>)}
+                </ul>
+                {project.github && (
+                  <p class="project-links"><a href={project.github} target="_blank" rel="noreferrer">GitHub</a></p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </article>
+  </div>
 </section>
 
 <style>
-  .featured-list { list-style: none; display: flex; flex-direction: column; gap: 100px; overflow: hidden; }
-  .featured-project {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    align-items: center;
-    gap: 10px;
-    opacity: 0;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .featured-project.from-left, .slide-in.from-left  { transform: translateX(-60px); }
-  .featured-project.from-right, .slide-in.from-right { transform: translateX(60px); }
-  .featured-project.visible, .slide-in.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .project-content {
-    grid-column: 1 / 8;
-    grid-row: 1;
-    position: relative;
-    z-index: 2;
-  }
-  .project-content.right { grid-column: 6 / -1; text-align: right; }
-  .project-image {
-    grid-column: 6 / -1;
-    grid-row: 1;
-    opacity: 0.5;
-    transition: var(--transition);
-  }
-  .project-image:hover { opacity: 0.8; }
-  .project-image img { width: 100%; border-radius: var(--border-radius); }
-  .featured-project:nth-child(even) .project-image { grid-column: 1 / 8; }
-  .featured-project:nth-child(even) .project-content { grid-column: 7 / -1; }
-
-  .project-name {
-    font-size: clamp(22px, 4vw, 28px);
-    color: var(--color-white-pure);
-    margin-bottom: 20px;
-  }
-  .project-description {
-    background: var(--color-navy-light);
-    padding: 20px 25px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
-    margin-bottom: 20px;
-  }
-  .project-tech {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--color-accent);
-    margin-bottom: 10px;
-  }
-  .project-content.right .project-tech { justify-content: flex-end; }
-  .project-links-wrapper { position: relative; margin-top: 10px; }
-  .links-toggle {
-    background: none;
-    border: 1px solid var(--color-accent);
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    padding: 8px 16px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: var(--transition);
-  }
-  .links-toggle:hover {
-    background: rgba(255, 107, 53, 0.1);
-  }
-  [data-theme="light"] .links-toggle:hover {
-    background: rgba(31, 95, 31, 0.1);
-  }
-  .project-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-    overflow: hidden;
-    max-height: 50px;
-    opacity: 1;
-    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
-  }
-  .project-links.hidden {
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-  }
-  .project-content.right .project-links { justify-content: flex-end; }
-  .project-links a {
-    color: var(--color-slate-light);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    text-decoration: none;
-    transition: var(--transition);
-  }
-  .project-links a:hover { color: var(--color-accent); }
-
-  /* Other projects */
-  .other-heading {
-    text-align: center;
-    font-size: clamp(20px, 3vw, 24px);
-    color: var(--color-white);
-    margin: 100px 0 50px;
-  }
-  .other-grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-    margin-bottom: 50px;
-  }
-  .other-project {
-    background: var(--color-navy-light);
-    border-radius: var(--border-radius);
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    opacity: 0;
-    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.25s ease;
-  }
-  .other-project:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-  .other-top { display: flex; justify-content: space-between; align-items: center; }
-  .other-project h3 { color: var(--color-white); font-size: 18px; }
-  .tech-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: auto;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-accent);
-  }
-  @media (max-width: 768px) {
-    .featured-project { display: block; }
-    .project-image { display: none; }
-    .project-description { background: none; padding: 0; }
-    .other-heading { margin: 60px 0 30px; }
-  }
+  ul { list-style: none; padding: 0; margin: 0; }
+  .featured-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+  .featured-project { display: flex; flex-direction: column; gap: var(--space-md); padding: var(--space-xl); border-radius: var(--radius-card); background: var(--color-paper-2); color: var(--color-ink); min-height: 360px; transition: transform var(--dur-short) var(--ease-out); }
+  .featured-project:nth-child(4n+1) { background: var(--color-sky); color: var(--color-sky-ink); }
+  .featured-project:nth-child(4n+2) { background: var(--color-accent); color: var(--color-accent-ink); }
+  .featured-project:nth-child(4n+4) { background: var(--color-ink); color: var(--color-paper); }
+  .featured-project:hover { transform: translateY(-4px); }
+  .featured-project a { color: inherit; }
+  .project-head { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .project-name { font-size: var(--text-2xl); font-weight: 600; max-width: none; }
+  .project-links { display: flex; gap: var(--space-lg); font-size: var(--text-sm); font-weight: 500; }
+  .project-description { max-width: 62ch; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-md); font-size: var(--text-sm); font-weight: 500; margin-top: auto; opacity: 0.85; }
+  .other-heading { margin-top: var(--space-2xl); margin-bottom: var(--space-lg); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); }
+  .other-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+  .other-project { display: flex; flex-direction: column; gap: var(--space-sm); padding: var(--space-lg); border: 2px solid var(--color-ink); border-radius: var(--radius-card); transition: transform var(--dur-short) var(--ease-out); }
+  .other-project:hover { transform: translateY(-3px); }
+  .other-project h3 { font-size: var(--text-xl); font-weight: 600; }
+  .other-project p { color: var(--color-ink-2); font-size: var(--text-sm); }
+  .other-project .project-tech { color: var(--color-muted); opacity: 1; }
+  @media (max-width: 60rem) { .featured-list { grid-template-columns: minmax(0, 1fr); } .featured-project { min-height: 0; } }
+  @media (max-width: 40rem) { .other-grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .featured-project:hover, .other-project:hover { transform: none; } }
 </style>
-
-<script>
-  // Slide-in observer for featured projects and other project cards
-  const slideObserver = new IntersectionObserver(
-    (entries) => entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        slideObserver.unobserve(e.target);
-      }
-    }),
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
-  document.querySelectorAll('.slide-in').forEach(el => slideObserver.observe(el));
-
-  document.querySelectorAll('.links-toggle').forEach(button => {
-    button.addEventListener('click', () => {
-      const links = button.nextElementSibling;
-      const isHidden = links?.classList.contains('hidden');
-
-      links?.classList.toggle('hidden');
-      button.setAttribute('aria-expanded', String(isHidden));
-      button.textContent = isHidden ? 'Hide Links' : 'View Links';
-    });
-  });
-</script>

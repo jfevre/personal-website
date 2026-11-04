@@ -1,6 +1,5 @@
 ---
 import Nav from '../components/layout/Nav.astro';
-import Sidebar from '../components/layout/Sidebar.astro';
 import Footer from '../components/layout/Footer.astro';
 import Hero from '../components/sections/Hero.astro';
 import About from '../components/sections/About.astro';
@@ -24,7 +23,7 @@ import '../styles/global.css';
     <link rel="icon" type="image/png" href="/favicon.png" />
     <script is:inline>
       // Set theme before page loads to prevent flash
-      const theme = localStorage.getItem('theme') || 'dark';
+      const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
 
       // Update favicon based on theme
@@ -36,7 +35,6 @@ import '../styles/global.css';
   </head>
   <body>
     <Nav />
-    <Sidebar />
     <main id="content">
       <Hero />
       <About />
@@ -53,7 +51,7 @@ import '../styles/global.css';
       const htmlEl = document.documentElement;
 
       // Check for saved theme preference or default to dark
-      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const currentTheme = localStorage.getItem('theme') || 'light';
       htmlEl.setAttribute('data-theme', currentTheme);
 
       const toggleTheme = () => {
@@ -71,15 +69,6 @@ import '../styles/global.css';
       themeToggle?.addEventListener('click', toggleTheme);
       themeToggleMobile?.addEventListener('click', toggleTheme);
 
-      // Scroll-triggered reveal
-      const observer = new IntersectionObserver(
-        (entries) => entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-        }),
-        { threshold: 0.1 }
-      );
-      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
       // Nav shadow on scroll
       const nav = document.querySelector('header');
       window.addEventListener('scroll', () => {
@@ -88,3 +77,8 @@ import '../styles/global.css';
     </script>
   </body>
 </html>
+
+<style is:global>
+  html { overflow-x: clip; }
+  body { overflow-x: clip; }
+</style>

@@ -4,122 +4,62 @@ const { skills, certifications } = about;
 ---
 
 <section id="about">
-  <h2 class="section-heading fade-up" data-number="01.">About Me</h2>
-
-  <div class="about-grid fade-up">
-    <div class="about-text">
-      <p>
-        I'm a DevOps/Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and automation.
-        I specialise in building automated, scalable cloud solutions — turning manual processes into reliable pipelines
-        and helping teams ship with confidence.
-      </p>
-      <p>
-        I've worked across government, travel, and transport sectors, delivering everything from serverless AI pipelines
-        to large-scale Active Directory migrations. I previously held SC security clearance and enjoy solving problems that
-        sit at the intersection of infrastructure, automation, and developer experience.
-      </p>
-      <p>
-        I studied Business & ICT at Sheffield Hallam University (2:1), and I'm always learning — currently building
-        with AWS Bedrock, Step Functions, and modern IaC practices.
-      </p>
-
-      <h3 class="subsection-heading">Certifications</h3>
-      <ul class="skills-list certs">
-        {certifications.map(cert => (
-          <li>
-            {cert.url ? (
-              <a href={cert.url} target="_blank" rel="noopener noreferrer" class="cert-link">
-                {cert.name}
-              </a>
-            ) : (
-              cert.name
-            )}
-          </li>
-        ))}
-      </ul>
-
-      <h3 class="subsection-heading">Technologies</h3>
-      <ul class="skills-list">
-        {skills.map(skill => <li>{skill}</li>)}
-      </ul>
-    </div>
-
-    <div class="about-photo">
-      <div class="photo-wrapper">
-        <img src="/headshot.png" alt="John Fevre" />
+  <div class="container split">
+    <div class="head"><h2>About</h2></div>
+    <article class="about-body">
+      <div class="about-text">
+        <p class="lead">
+          I’m a DevOps/Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and automation.
+          I specialise in building automated, scalable cloud solutions, turning manual processes into reliable pipelines
+          and helping teams ship with confidence.
+        </p>
+        <p>
+          I’ve worked across government, travel, and transport sectors, delivering everything from serverless AI pipelines
+          to large-scale Active Directory migrations. I previously held SC security clearance and enjoy solving problems that
+          sit at the intersection of infrastructure, automation, and developer experience.
+        </p>
+        <p>
+          I studied Business &amp; ICT at Sheffield Hallam University (2:1), and I’m always learning, currently building
+          with AWS Bedrock, Step Functions, and modern IaC practices.
+        </p>
       </div>
-    </div>
+
+      <div class="lists">
+        <div>
+          <h3>Certifications</h3>
+          <ul class="certs">
+            {certifications.map(cert => (
+              <li>
+                {cert.url ? (
+                  <a href={cert.url} target="_blank" rel="noopener noreferrer" class="cert-link">{cert.name}</a>
+                ) : (
+                  cert.name
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Technologies</h3>
+          <ul class="skills">
+            {skills.map(skill => <li>{skill}</li>)}
+          </ul>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
 <style>
-  .about-grid {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 50px;
-    align-items: start;
-  }
-  .about-text p {
-    margin-bottom: 15px;
-  }
-  .skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    gap: 0 10px;
-    list-style: none;
-    margin-top: 20px;
-  }
-  .skills-list li {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    padding: 4px 0;
-  }
-  .skills-list li::before {
-    content: '▹ ';
-    color: var(--color-accent);
-  }
-  .skills-list.certs {
-    grid-template-columns: 1fr;
-  }
-  .cert-link {
-    color: var(--color-slate-light);
-    text-decoration: none;
-    transition: var(--transition);
-  }
-  .cert-link:hover {
-    color: var(--color-accent);
-  }
-  .subsection-heading {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-white);
-    margin-top: 25px;
-    margin-bottom: 10px;
-  }
-  .photo-wrapper {
-    position: relative;
-    max-width: 300px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25);
-    transition: box-shadow 0.3s ease;
-  }
-  .photo-wrapper:hover {
-    box-shadow: 0 0 35px rgba(255, 107, 53, 0.5);
-  }
-  :global([data-theme="light"]) .photo-wrapper {
-    box-shadow: 0 0 20px rgba(31, 95, 31, 0.3);
-  }
-  :global([data-theme="light"]) .photo-wrapper:hover {
-    box-shadow: 0 0 35px rgba(31, 95, 31, 0.55);
-  }
-  .photo-wrapper img {
-    width: 100%;
-    border-radius: var(--border-radius);
-    display: block;
-  }
-
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; }
-    .about-photo { max-width: 250px; margin: 0 auto; }
-  }
+  .about-body { display: grid; gap: var(--space-2xl); }
+  .about-text { display: grid; gap: var(--space-lg); }
+  .lead { color: var(--color-ink); font-size: var(--text-xl); line-height: 1.4; max-width: 40ch; }
+  .lists { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap-columns); }
+  h3 { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); margin-bottom: var(--space-md); }
+  ul { list-style: none; padding: 0; margin: 0; }
+  .certs li { padding-block: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule); }
+  .certs li:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
+  .skills { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+  .skills li { padding: var(--space-xs) var(--space-md); border-radius: var(--radius-pill); background: var(--color-sky); color: var(--color-sky-ink); font-size: var(--text-sm); font-weight: 500; }
+  @media (max-width: 60rem) { .lists { grid-template-columns: minmax(0, 1fr); } }
 </style>

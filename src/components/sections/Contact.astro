@@ -2,72 +2,24 @@
 import meta from '../../content/meta.json';
 ---
 
-<section id="contact">
-  <div class="contact-bg"></div>
-  <div class="contact-content">
-    <p class="overline fade-up">04. What's Next?</p>
-    <h2 class="fade-up">Get In Touch</h2>
-    <p class="contact-text fade-up">
-      I'm currently open to new opportunities. Whether you have a question, a project in mind,
-      or just want to connect — feel free to reach out.
-    </p>
-    <a href={meta.social.linkedin} target="_blank" rel="noreferrer" class="btn fade-up">Connect on LinkedIn</a>
+<section id="contact" class="band">
+  <div class="container split">
+    <div class="head"><h2>Get in touch</h2></div>
+    <div class="contact-body">
+      <p class="lead contact-text">
+        I’m currently open to new opportunities. Whether you have a question, a project in mind,
+        or just want to connect, feel free to reach out.
+      </p>
+      <a href={meta.social.linkedin} target="_blank" rel="noreferrer" class="btn">Connect on LinkedIn</a>
+    </div>
   </div>
 </section>
 
 <style>
-  #contact {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding-block: 150px;
-    overflow: hidden;
-    max-width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    padding-left: max(50px, calc((100vw - var(--max-width)) / 2));
-    padding-right: max(50px, calc((100vw - var(--max-width)) / 2));
-  }
-  .contact-bg {
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    width: 100vw;
-    top: 0;
-    bottom: 0;
-    background-image: url('/bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.15;
-    z-index: 0;
-  }
-  .contact-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .overline {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    color: var(--color-accent);
-    margin-bottom: 20px;
-  }
-  h2 {
-    font-size: clamp(40px, 8vw, 60px);
-    font-weight: 600;
-    color: var(--color-white-pure);
-    margin-bottom: 20px;
-  }
-  .contact-text {
-    max-width: 500px;
-    margin-bottom: 50px;
-  }
+  .band { background: var(--color-sky); color: var(--color-sky-ink); margin-inline: var(--space-md); border-radius: var(--radius-card); padding-block: var(--section-gap); }
+  .contact-body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-xl); }
+  .contact-text { color: var(--color-sky-ink); font-size: var(--text-xl); line-height: 1.4; max-width: 36ch; }
+  h2 { font-size: var(--text-display); font-weight: 600; }
+  .head h2 { max-width: 8ch; }
+  @media (max-width: 40rem) { .band { margin-inline: 0; border-radius: 0; } }
 </style>

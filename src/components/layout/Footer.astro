@@ -3,25 +3,20 @@ import meta from '../../content/meta.json';
 ---
 
 <footer>
-  <a href={meta.social.github} target="_blank" rel="noreferrer">
-    Built by {meta.name}
-  </a>
+  <div class="container">
+    <a href={meta.social.github} target="_blank" rel="noreferrer">Built by {meta.name}</a>
+    <ul>
+      {meta.social.github && <li><a href={meta.social.github} target="_blank" rel="noreferrer">GitHub</a></li>}
+      {meta.social.linkedin && <li><a href={meta.social.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>}
+    </ul>
+  </div>
 </footer>
 
 <style>
-  footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    text-align: center;
-  }
-  footer a {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-slate);
-    text-decoration: none;
-    transition: var(--transition);
-  }
-  footer a:hover { color: var(--color-accent); }
+  footer { padding-block: var(--space-xl); font-size: var(--text-sm); color: var(--color-muted); }
+  .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-md); }
+  ul { list-style: none; display: flex; gap: var(--space-lg); padding: 0; margin: 0; }
+  a { color: var(--color-ink-2); text-underline-offset: 0.25em; }
+  a:hover { color: var(--color-accent); }
+  a:active { color: var(--color-ink); }
 </style>

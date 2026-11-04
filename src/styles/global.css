@@ -1,146 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* Hallmark · shape: Sunny Blocks · genre: playful · theme: custom · redesign: full · job: hire · idea: "An engineer who builds things in the cloud, shown under an open sky: his own photograph at the wheel, set in four bright colour blocks." · vibe: "sunny, bubbly, confident, handmade, welcoming"
+ * paper: oklch(95.6% 0.008 75) · accent: oklch(63% 0.21 33) · display: Melodrama · body: Switzer · hero: Poster (a big Melodrama headline, the owner's photograph in an arch beside it) · nav: a pill bar with the mark left and pill links right · footer: one line of links on the paper · imagery: the owner's photograph in true colour, framed as an arch · signature: the photograph at the wheel under a pale sky, in an arch shape, beside a headline set at poster size
+ * axes: light/high-contrast-serif/chromatic-red · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the experience log is long because the work history is kept verbatim, so each role gets a date pill and a generous gap to keep it scannable */
+/* Hallmark · answered: the palette is the Brazen Girlboss set from the Northfolk Spirited Savant page (cream, powder blue, forest green, vermilion) because the owner named that style; the accent is vermilion because it matches the orange the site used before, and it only fills buttons and tiles with forest ink on top, never small text */
+/* Hallmark · answered: a dark theme is kept because the site already ships a theme toggle; it moves the ground to a warm charcoal with cream ink and keeps the powder blue and vermilion at full strength as the pops */
+/* Hallmark · reworded "I build things in the cloud." to "John Fevre builds things in the cloud." · the hero carries the name and the line in one headline */
+/* Hallmark · reworded "or just want to connect — feel free to reach out" to "or just want to connect, feel free to reach out" · 19 names the dash */
+/* Hallmark · dropped #hero-tagline typing script, .fade-up observer, .slide-in observer, .links-toggle, the experience tab script, <Sidebar /> · every job and project link is visible at rest, and the socials move to the footer */
+@import url("https://api.fontshare.com/v2/css?f[]=melodrama@400,500,600,700&f[]=switzer@400,500&display=swap");
+@import url("./tokens.css");
+@import url("./base.css");
 
-:root {
-  /* Typography */
-  --font-sans: 'Roboto', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+:root { --nav-height: 80px; }
 
-  /* Layout */
-  --nav-height:    70px;
-  --max-width:     1100px;
-  --border-radius: 4px;
+html { overflow-x: clip; scroll-behavior: smooth; }
+body { overflow-x: clip; font-size: 1.0625rem; }
+a { text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 4px; }
 
-  /* Animation */
-  --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
+section { padding-block: var(--section-gap-s); }
+.container { padding-inline: var(--gutter); }
 
-/* Dark mode (default) — lighter anthracite & orange */
-:root, [data-theme="dark"] {
-  --color-navy:        #2a2a2a;
-  --color-navy-light:  #3a3a3a;
-  --color-navy-shadow: #1a1a1a;
-  --color-slate:       #a8a8a8;
-  --color-slate-light: #c8c8c8;
-  --color-slate-dark:  #5a5a5a;
-  --color-white:       #ececec;
-  --color-white-pure:  #ffffff;
-  --color-accent:      #ff6b35;
-}
+/* a section is a head column and a body column */
+.split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--gap-columns); align-items: start; }
+.split > .head { position: sticky; top: calc(var(--nav-height) + var(--space-lg)); }
+.split h2 { max-width: none; font-weight: 600; }
+@media (max-width: 60rem) { .split { grid-template-columns: minmax(0, 1fr); } .split > .head { position: static; } }
 
-/* Light mode — light gray & forest green */
-[data-theme="light"] {
-  --color-navy:        #f5f5f5;
-  --color-navy-light:  #ffffff;
-  --color-navy-shadow: #e0e0e0;
-  --color-slate:       #4a4a4a;
-  --color-slate-light: #2d2d2d;
-  --color-slate-dark:  #9a9a9a;
-  --color-white:       #1a1a1a;
-  --color-white-pure:  #000000;
-  --color-accent:      #1f5f1f;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100%;
-}
-
-body {
-  background-color: var(--color-navy);
-  color: var(--color-slate);
-  font-family: var(--font-sans);
-  font-size: clamp(14px, 1.5vw, 16px);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  height: 100%;
-}
-
-::selection {
-  background-color: var(--color-navy-light);
-  color: var(--color-white-pure);
-}
-
-::-webkit-scrollbar       { width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-navy); }
-::-webkit-scrollbar-thumb { background: var(--color-slate-dark); border-radius: 4px; }
-
-/* Utility: fade-up animation, toggled by JS IntersectionObserver */
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Shared section styles — full-page snap scrolling */
-section {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 100px 150px;
-  min-height: 100vh;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-@media (max-width: 1080px) { section { padding: 80px 100px; } }
-@media (max-width: 768px)  { section { padding: 60px 50px; } }
-@media (max-width: 480px)  { section { padding: 60px 25px; } }
-
-.section-heading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: clamp(20px, 4vw, 28px);
-  font-weight: 600;
-  color: var(--color-white);
-  white-space: nowrap;
-  margin-bottom: 40px;
-}
-
-.section-heading::before {
-  content: attr(data-number);
-  font-family: var(--font-mono);
-  font-size: clamp(14px, 3vw, 20px);
-  color: var(--color-accent);
-  font-weight: 400;
-}
-
-.section-heading::after {
-  content: '';
-  display: block;
-  height: 1px;
-  width: 300px;
-  background: var(--color-slate-dark);
-}
-
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--color-accent);
-  border-radius: var(--border-radius);
-  color: var(--color-accent);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  text-decoration: none;
-  transition: var(--transition);
-}
-/* Dark mode button hover */
-:root .btn:hover,
-[data-theme="dark"] .btn:hover {
-  background: rgba(255, 107, 53, 0.1);
-}
-
-/* Light mode button hover */
-[data-theme="light"] .btn:hover {
-  background: rgba(45, 134, 45, 0.1);
-}
+/* one primary button: a vermilion pill with forest ink */
+.btn { display: inline-flex; align-items: center; min-height: 52px; padding: 0 var(--space-xl); border: 0; border-radius: var(--radius-pill); background: var(--color-accent); color: var(--color-accent-ink); font: 500 var(--text-md)/1 var(--font-body); text-decoration: none; cursor: pointer; transition: transform var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out); }
+.btn:hover { transform: translateY(-3px); }
+.btn:active { transform: translateY(0); }
+.btn:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
