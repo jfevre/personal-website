@@ -611,13 +611,13 @@
     if (!map) return;
     map.eachLayer(l => { if (l instanceof L.TileLayer) map?.removeLayer(l); });
     const dark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+    const cartoKey = import.meta.env.PUBLIC_CARTO_API_KEY;
+    const keyParam = cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : '';
     L.tileLayer(
-      dark
-        ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+      `https://basemaps.cartocdn.com/${dark ? 'dark_nolabels' : 'light_nolabels'}/{z}/{x}/{y}{r}.png${keyParam}`,
       {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd', maxZoom: 20,
+        maxZoom: 20,
       }
     ).addTo(map);
   }

@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: 'npm'
@@ -48,6 +48,12 @@ jobs:
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Build verification
+        if: steps.fix.outputs.has_changes == 'true'
+        run: |
+          npm ci
+          npm run build
+
       - name: Create PR with fixes
         if: steps.fix.outputs.has_changes == 'true'
         run: |
@@ -62,14 +68,8 @@ jobs:
 
           gh pr create \
             --title "Security: npm audit fixes" \
-            --body "Automated security fixes from \`npm audit fix\`.\n\nReview changes before merging." \
+            --body $'Automated security fixes from `npm audit fix`.\n\nReview changes before merging.' \
             --base main \
             --head $BRANCH
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build verification
-        if: steps.fix.outputs.has_changes == 'true'
-        run: |
-          npm ci
-          npm run build
