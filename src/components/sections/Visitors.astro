@@ -125,6 +125,25 @@
   the Astro scoped-cid attribute — a scoped <style> block won't reach them.
 -->
 <style is:global>
+  /* Zoom buttons are created by Leaflet at runtime, same as the flip cards */
+  .map-zoom button {
+    display: block;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+    color: #000;
+    font: bold 18px/30px 'Lucida Console', Monaco, monospace;
+    cursor: pointer;
+  }
+  .map-zoom button:first-child { border-radius: 2px 2px 0 0; }
+  .map-zoom button:last-child { border-radius: 0 0 2px 2px; border-bottom: none; }
+  .map-zoom button:hover:not(:disabled) { background: #f4f4f4; }
+  .map-zoom button:disabled { color: #bbb; cursor: default; }
+  .map-zoom button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+
   .flip-number {
     display: flex;
     gap: 4px;
@@ -552,10 +571,40 @@
 
     map = L.map('map', {
       center: [20, 0], zoom: 2, minZoom: 2, maxZoom: 6,
-      zoomControl: true, scrollWheelZoom: false,
+      zoomControl: false, scrollWheelZoom: false,
     });
+    addZoomButtons(map);
     updateMapTiles();
     loadData();
+  }
+
+  // Leaflet's built-in zoom control renders <a href="#">; use real buttons instead
+  function addZoomButtons(m: L.Map) {
+    const ZoomButtons = L.Control.extend({
+      onAdd() {
+        const bar = L.DomUtil.create('div', 'leaflet-bar map-zoom');
+        const make = (label: string, title: string, onClick: () => void) => {
+          const btn = L.DomUtil.create('button', '', bar);
+          btn.type = 'button';
+          btn.textContent = label;
+          btn.title = title;
+          btn.setAttribute('aria-label', title);
+          L.DomEvent.on(btn, 'click', (e) => { L.DomEvent.stop(e); onClick(); });
+          return btn;
+        };
+        const zoomIn  = make('+', 'Zoom in',  () => m.zoomIn());
+        const zoomOut = make('\u2212', 'Zoom out', () => m.zoomOut());
+        const sync = () => {
+          zoomIn.disabled  = m.getZoom() >= m.getMaxZoom();
+          zoomOut.disabled = m.getZoom() <= m.getMinZoom();
+        };
+        m.on('zoomend', sync);
+        sync();
+        L.DomEvent.disableClickPropagation(bar);
+        return bar;
+      },
+    });
+    new ZoomButtons({ position: 'topleft' }).addTo(m);
   }
 
   function updateMapTiles() {

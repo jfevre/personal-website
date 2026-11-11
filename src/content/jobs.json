@@ -6,10 +6,14 @@
     "url": "https://www.awaze.com",
     "range": "Sep 2023 – Present",
     "bullets": [
-      "Migrated IAM users to AWS IAM Identity Centre, centralising SSO and permission sets across multiple accounts, eliminating static access keys, and implementing TEAM for time-limited production privilege escalation.",
-      "Played a pivotal role in delivering the Akamai to CloudFront migration, translating complex multi-environment configurations into reusable Terraform modules.",
-      "Built a serverless AI image analysis pipeline (Lambda, Bedrock, SQS, Step Functions) extracting structured metadata from millions of property listing images.",
-      "Migrated a full engineering team into a dedicated AWS account — RDS Aurora, ECS frontend, private API Gateways — handing over a fully self-sufficient platform."
+      "Brought hand-built (ClickOps) AWS infrastructure under Terraform and Terragrunt through resource imports and drift remediation, including a NAT gateway redesign that cut NAT costs by over 80% across the DevOps accounts, saving ~$9.5k a year in recurring spend.",
+      "Deployed the AWS FinOps agent on Amazon Bedrock AgentCore (comparable to Azure AI Foundry Agent Service), exposing its tools through an MCP-compatible AgentCore Gateway and securing access with Entra ID SSO via OIDC federation.",
+      "Migrated IAM users to AWS IAM Identity Centre, centralising SSO and permission sets across multiple accounts, eliminating static access keys, and implementing TEAM for just-in-time, least-privilege production access. Extended identity federation to internal applications, replacing Cognito with Identity Centre SAML.",
+      "Helped deliver the Akamai to CloudFront migration, building the company's first CloudFront site from scratch and authoring the reusable Terraform modules that became the foundation for every migration that followed, including the Translate API.",
+      "Built an event-driven, serverless AI image analysis pipeline (Lambda, Bedrock, SQS, Step Functions) extracting structured metadata from millions of property listing images, with per-image cost tracking.",
+      "Migrated a full engineering team into a dedicated AWS account (RDS Aurora, ECS frontend, private API Gateways shared cross-account through VPC endpoints and resource policies), handing over a self-sufficient platform.",
+      "Maintained and improved EKS clusters hosting New Relic Synthetics private locations and GitHub Actions Runner Controller (ARC), providing ephemeral, autoscaling self-hosted CI runners for engineering teams.",
+      "Led security remediation across 46 repositories in four weeks, then shifted security left with defence-in-depth guardrails: Wiz CLI scanning in GitHub Actions, immutable OIDC subject claims, S3 object-level CloudTrail logging for every bucket, centralised WAF logging and the GitHub IP allowlist under IaC."
     ]
   },
   {
@@ -20,8 +24,8 @@
     "range": "Jan 2023 – Sep 2023",
     "bullets": [
       "Built an automated backup platform using the Veeam for AWS API, standardising backup appliances across AWS environments to give the business a unified, consistent backup strategy.",
-      "Introduced Bitbucket Pipelines to the DevOps team, to reduce costs of running jenkins boxes bringing as the minutes for the bitbucket pipelines were being paid for but not used.",
-      "Authored a reusable OIDC Terraform module for AWS environment access, removing the need for long-lived IAM credentials and improving the team's overall security posture."
+      "Moved the DevOps team from Jenkins to Bitbucket Pipelines, using pipeline minutes we were already paying for and cutting the cost of running Jenkins servers.",
+      "Authored a reusable OIDC Terraform module for AWS environment access, removing the need for long-lived IAM credentials."
     ]
   },
   {
@@ -31,8 +35,8 @@
     "url": "https://www.awaze.com",
     "range": "Sep 2021 – Jan 2023",
     "bullets": [
-      "Introduced IaC into an operations team where all tasks had previously been performed manually — replacing ad-hoc changes with Terraform for deployments, Git for source control, and GitHub Actions for pipeline-driven promotion through environments.",
-      "Reduced change window durations significantly by scripting out common infrastructure changes in Terraform, cutting risk and toil for the on-call team.",
+      "Introduced IaC into an operations team where all tasks had previously been performed manually: replacing ad-hoc changes with Terraform for deployments, Git for source control, and GitHub Actions for pipeline-driven promotion through environments.",
+      "Cut common infrastructure changes from a few days of manual ClickOps work to a matter of minutes by scripting them in Terraform, reducing risk and toil for the on-call team.",
       "Designed and deployed a 1Password SCIM bridge on ECS Fargate, automating group provisioning from Active Directory into 1Password and eliminating manual account management overhead."
     ]
   },
@@ -44,11 +48,11 @@
     "range": "Nov 2017 – Sep 2021",
     "bullets": [
       "Maintained and developed the Terraform repository underpinning a multi-environment serverless government platform (Lambda, ECS Fargate), including production code reviews, CloudWatch monitoring and alerting, and cross-team technical support.",
-      "Managed and enhanced the Drone.io CI/CD pipeline for the government platform, ensuring reliable promotion of changes across development, staging, and production environments.",
+      "Managed and enhanced the Drone.io CI/CD pipeline that promoted changes for the government platform through development, staging and production.",
       "Led the migration of a Windows Server 2003 data centre domain to a security-hardened AWS environment running Windows Server 2016, including over 20,000 Active Directory users, objects, and group policies.",
       "Redeployed internal company tooling from a legacy Windows Server environment to a Linux-based, high-availability cluster backed by MariaDB/PostgreSQL, improving resilience and reducing licensing costs.",
       "Managed user account lifecycle to ISO 27001 standards across on-premises Active Directory and Office 365, maintaining audit-ready access controls for both internal staff and client environments.",
-      "Provided 1st, 2nd, and 3rd line support across internal and client infrastructure, acting as an escalation point and working directly with development teams on all elements of the service."
+      "Provided 1st, 2nd, and 3rd line support across internal and client infrastructure, acting as an escalation point and working directly with development teams."
     ]
   },
   {
@@ -71,7 +75,7 @@
     "range": "Jul 2013 – Jul 2015",
     "bullets": [
       "Part of the engineering team responsible for a full stadium WiFi deployment, covering fan connectivity as well as internal systems including POS, ticketing, and digital signage.",
-      "Provided critical on-site support for the installation during a major international sporting event, ensuring network stability under high-traffic conditions.",
+      "Provided critical on-site support for the installation during a major international sporting event, keeping the network up under heavy traffic.",
       "Delivered 2nd and 3rd line support to WiFi hotspot networks operated by the UK's largest mobile provider, supporting high-availability consumer-facing infrastructure."
     ]
   }
