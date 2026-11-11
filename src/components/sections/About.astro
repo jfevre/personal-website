@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import about from '../../content/about.json';
+import headshot from '../../assets/headshot.png';
 const { skills, certifications } = about;
 ---
 
@@ -9,18 +11,22 @@ const { skills, certifications } = about;
   <div class="about-grid fade-up">
     <div class="about-text">
       <p>
-        I'm a DevOps/Cloud Engineer based in Manchester with over 10 years of experience in infrastructure and automation.
-        I specialise in building automated, scalable cloud solutions — turning manual processes into reliable pipelines
-        and helping teams ship with confidence.
+        I'm a DevOps Engineer at Awaze in Manchester, where I work across a multi-account AWS estate:
+        identity and access, CDN, CI/CD runners, security guardrails and cost. I started in 2013 on stadium WiFi
+        and third-line support, moved into infrastructure consulting on government platforms, and have spent the
+        last few years turning hand-built AWS infrastructure into Terraform and Terragrunt.
       </p>
       <p>
-        I've worked across government, travel, and transport sectors, delivering everything from serverless AI pipelines
-        to large-scale Active Directory migrations. I previously held SC security clearance and enjoy solving problems that
-        sit at the intersection of infrastructure, automation, and developer experience.
+        My recent work has been heavy on identity, security and cost. I moved our AWS accounts onto IAM Identity
+        Centre with just-in-time production access, led security remediation across 46 repositories, and
+        redesigned our NAT gateways to cut NAT costs by over 80%. I also build on AWS's AI services, from a Bedrock
+        pipeline that extracts metadata from millions of property images to a FinOps agent running on Bedrock
+        AgentCore.
       </p>
       <p>
-        I studied Business & ICT at Sheffield Hallam University (2:1), and I'm always learning — currently building
-        with AWS Bedrock, Step Functions, and modern IaC practices.
+        I hold the AWS Solutions Architect and DevOps Engineer Professional certifications, previously held SC
+        clearance, and studied Business & ICT at Sheffield Hallam University (2:1). The problems I enjoy most are
+        where infrastructure and developer experience overlap.
       </p>
 
       <h3 class="subsection-heading">Certifications</h3>
@@ -46,7 +52,7 @@ const { skills, certifications } = about;
 
     <div class="about-photo">
       <div class="photo-wrapper">
-        <img src="/headshot.png" alt="John Fevre" />
+        <Image src={headshot} alt="John Fevre" width={600} widths={[300, 600]} sizes="300px" />
       </div>
     </div>
   </div>
@@ -114,6 +120,7 @@ const { skills, certifications } = about;
   }
   .photo-wrapper img {
     width: 100%;
+    height: auto;
     border-radius: var(--border-radius);
     display: block;
   }

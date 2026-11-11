@@ -1,13 +1,20 @@
 ---
+import { Image } from 'astro:assets';
 import meta from '../../content/meta.json';
+import logo from '../../assets/logo.png';
+import logoLight from '../../assets/lightmode.png';
+import githubDark from '../../assets/github_dark.png';
+import githubLight from '../../assets/github_light.png';
+import linkedinDark from '../../assets/linkedin_dark.png';
+import linkedinLight from '../../assets/linkedin_light.png';
 const navLinks = ['About', 'Experience', 'Projects', 'Contact', 'Visitors'];
 ---
 
 <header>
   <nav>
     <a href="/" class="logo" aria-label="home">
-      <img src="/logo.png" alt="JF" width="40" height="40" class="logo-dark" />
-      <img src="/lightmode.png" alt="JF" width="40" height="40" class="logo-light" />
+      <Image src={logo} alt="JF" width={40} height={40} densities={[1, 2]} loading="eager" class="logo-dark" />
+      <Image src={logoLight} alt="JF" width={40} height={40} densities={[1, 2]} loading="eager" class="logo-light" />
     </a>
     <div class="mobile-controls">
       <button id="theme-toggle-mobile" class="theme-toggle-mobile" aria-label="Toggle theme" title="Toggle theme">
@@ -37,15 +44,15 @@ const navLinks = ['About', 'Experience', 'Projects', 'Contact', 'Visitors'];
         <div class="mobile-social-icons">
           {meta.social.github && (
             <a href={meta.social.github} target="_blank" rel="noreferrer" class="social-icon-link">
-              <img src="/github_dark.png" alt="GitHub" width="24" height="24" class="icon-dark" />
-              <img src="/github_light.png" alt="GitHub" width="24" height="24" class="icon-light" />
+              <Image src={githubDark} alt="GitHub" width={24} height={24} densities={[1, 2]} loading="eager" class="icon-dark" />
+              <Image src={githubLight} alt="GitHub" width={24} height={24} densities={[1, 2]} loading="eager" class="icon-light" />
               <span class="social-text">GitHub</span>
             </a>
           )}
           {meta.social.linkedin && (
             <a href={meta.social.linkedin} target="_blank" rel="noreferrer" class="social-icon-link">
-              <img src="/linkedin_dark.png" alt="LinkedIn" width="24" height="24" class="icon-dark" />
-              <img src="/linkedin_light.png" alt="LinkedIn" width="24" height="24" class="icon-light" />
+              <Image src={linkedinDark} alt="LinkedIn" width={24} height={24} densities={[1, 2]} loading="eager" class="icon-dark" />
+              <Image src={linkedinLight} alt="LinkedIn" width={24} height={24} densities={[1, 2]} loading="eager" class="icon-light" />
               <span class="social-text">LinkedIn</span>
             </a>
           )}

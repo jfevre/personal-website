@@ -3,8 +3,8 @@
     "id": 0,
     "featured": true,
     "name": "Portfolio Site",
-    "description": "This website! A static Astro site with visitor tracking via API Gateway, Lambda authorizer for origin verification, and automatic secret rotation. Infrastructure managed with Terragrunt/OpenTofu.",
-    "tech": ["Astro", "CloudFront", "API Gateway", "Lambda", "Terragrunt"],
+    "description": "This website! A static Astro site served from S3 and CloudFront using my own reusable Terraform static-site module, with a strict Content Security Policy and security headers set at the edge. The live visitor map is a serverless API behind the same distribution: CloudFront routes /api/* to API Gateway, a Lambda authorizer only accepts requests carrying a secret origin header, and EventBridge rotates that secret weekly, updating SSM and CloudFront automatically. Visits are counted by country in DynamoDB using CloudFront's viewer-country header, so no cookies or IP addresses are stored. Deploys run through GitHub Actions with OIDC (no long-lived AWS keys), and a weekly npm audit job opens fix PRs automatically.",
+    "tech": ["Astro", "CloudFront", "API Gateway", "Lambda", "DynamoDB", "EventBridge", "Terragrunt", "GitHub Actions"],
     "github": "https://github.com/jfevre/personal-website",
     "external": "https://john.fevre.uk",
     "image": null
@@ -33,8 +33,8 @@
     "id": 3,
     "featured": true,
     "name": "IAM Identity Centre Migration",
-    "description": "Migrated IAM users to AWS IAM Identity Centre, centralising SSO and permission sets across multiple accounts, eliminating static access keys, and implementing TEAM for time-limited privilege escalation.",
-    "tech": ["AWS IAM", "Identity Centre", "SSO", "Terraform", "TEAM"],
+    "description": "Moved engineers off individual IAM users and onto AWS IAM Identity Centre. Everyone now signs in once through SSO and reaches each AWS account through shared permission sets, so there are no per-account users to manage and no static access keys left to leak. Production access runs through TEAM: engineers request elevated access for a set period and it expires on its own, so no one needs standing production rights. Internal applications were moved from Cognito to Identity Centre SAML as well, putting them behind the same login.",
+    "tech": ["AWS IAM", "Identity Centre", "SSO", "SAML", "Terraform", "TEAM"],
     "github": null,
     "external": null,
     "image": null

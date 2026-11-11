@@ -1,5 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import meta from '../../content/meta.json';
+import githubDark from '../../assets/github_dark.png';
+import githubLight from '../../assets/github_light.png';
+import linkedinDark from '../../assets/linkedin_dark.png';
+import linkedinLight from '../../assets/linkedin_light.png';
 ---
 
 <!-- Fixed left: social icon links -->
@@ -8,16 +13,16 @@ import meta from '../../content/meta.json';
     {meta.social.github && (
       <li>
         <a href={meta.social.github} aria-label="GitHub" target="_blank" rel="noreferrer">
-          <img src="/github_dark.png" alt="GitHub" width="50" height="50" class="icon-dark" />
-          <img src="/github_light.png" alt="GitHub" width="50" height="50" class="icon-light" />
+          <Image src={githubDark} alt="GitHub" width={50} height={50} densities={[1, 2]} loading="eager" class="icon-dark" />
+          <Image src={githubLight} alt="GitHub" width={50} height={50} densities={[1, 2]} loading="eager" class="icon-light" />
         </a>
       </li>
     )}
     {meta.social.linkedin && (
       <li>
         <a href={meta.social.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer">
-          <img src="/linkedin_dark.png" alt="LinkedIn" width="50" height="50" class="icon-dark" />
-          <img src="/linkedin_light.png" alt="LinkedIn" width="50" height="50" class="icon-light" />
+          <Image src={linkedinDark} alt="LinkedIn" width={50} height={50} densities={[1, 2]} loading="eager" class="icon-dark" />
+          <Image src={linkedinLight} alt="LinkedIn" width={50} height={50} densities={[1, 2]} loading="eager" class="icon-light" />
         </a>
       </li>
     )}

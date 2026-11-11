@@ -8,7 +8,7 @@ import meta from '../../content/meta.json';
     <p class="intro fade-up">Hi, my name is</p>
     <h1 class="fade-up">{meta.name}.</h1>
     <h2 class="fade-up" id="hero-tagline" aria-label="I build things in the cloud."></h2>
-    <p class="bio fade-up">{meta.bio}</p>
+    <p class="bio fade-up">{meta.bio.map(line => <span>{line}</span>)}</p>
     <div class="cta fade-up">
       <a href="#projects" class="btn">Check out my work</a>
     </div>
@@ -119,6 +119,9 @@ import meta from '../../content/meta.json';
     max-width: 540px;
     margin-top: 20px;
     animation-delay: 400ms;
+  }
+  .bio span {
+    display: block;
   }
   .cta {
     margin-top: 50px;
